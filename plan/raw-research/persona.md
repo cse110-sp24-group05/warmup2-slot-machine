@@ -14,6 +14,7 @@ By: Lisa Tran, Zay Htet
 
 ## Gambling:
 **Name:** Mason Allin (new)
+
 **Age:** 20
 
 **Background:**
@@ -42,6 +43,7 @@ His friends around him have part time jobs and earn money. He wants to make mone
 
 
 **Name:** Jack Potts (professional)
+
 **Age:** 45
 
 **Background:**
