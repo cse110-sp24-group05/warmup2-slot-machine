@@ -4,7 +4,7 @@
 
 Our team will use AI to iteratively build and improve a slot machine through **20 iterations across 6 phases**. Each team member completes **2 iterations**, including prompting AI, updating code, and logging work. Each iteration builds on the previous one.
 
-We primarily use **Claude Opus** for development. If other models (e.g., ChatGPT, Gemini) are used, they will be clearly documented in the AI Use Log.
+We primarily use **Claude Opus 4.7** for development. If other models (e.g., ChatGPT, Gemini) are used, they will be clearly documented in the AI Use Log.
 
 ---
 
