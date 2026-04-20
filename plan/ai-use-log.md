@@ -6,6 +6,11 @@
 **Phase:**  
 **Team Member:**  
 
+**Date & Time:**  
+
+**Task:**  
+(what you were trying to do)
+
 **Model Used:**  
 (Claude Opus include any skills.md used)
 

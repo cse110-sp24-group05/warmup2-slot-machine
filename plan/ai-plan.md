@@ -14,8 +14,10 @@ We primarily use **Claude Opus** for development. If other models (e.g., ChatGPT
 **Goal:** Make the game fully functional and bug-free  
 
 **Responsibilities:**
+- break the final candidate from previous warm up to clear html, css, JS files.
 - Fix bugs (spin logic, payouts, crashes), make sure code structure follows principles of clean code.
-- Ensure reels spin and update correctly
+- Consider prompting the AI to find code logic weaknesses and edge cases.
+- Ensure reels spin and update correctly.
 - Add basic systems (bet, balance, reset)
 
 **Team Members:**
@@ -47,6 +49,7 @@ We primarily use **Claude Opus** for development. If other models (e.g., ChatGPT
 - Add visual feedback (win highlights, effects)
 - Add sound (spin, win, jackpot)
 - Improve UI layout and theme
+- consider a specific theme and use uiux skill md files (western, robot, etc.) 
 
 **Team Members:**
 - Name — Iterations 9, 10
