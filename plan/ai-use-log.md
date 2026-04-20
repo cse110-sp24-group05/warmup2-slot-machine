@@ -96,3 +96,86 @@ ESLint passes cleanly. Side-by-side browser testing (split at :8000, original at
 - We should either add a `package.json` script like `"start": "python3 -m http.server 8000"` or document the server requirement in the repo README so teammates don't hit the same confusion.
 - bugs.md is solid and actionable — iteration 2 has a clear priority list. Top candidates to fix first: bet-input re-clamping (#2), misleading `totalBurned` stat (#1), and jackpot persistence (#5) if there's time.
 - I did NOT need to hand-edit any code in this iteration.
+
+
+
+## Iteration 2
+
+**Phase:** Phase 1 — Baseline + Fixes
+
+**Team Member:** Nikolas
+
+**Date & Time:** 2026-04-20, ~12-1:00 PM
+
+**Task:**
+Fix three targeted bugs from iteration 1's `bugs.md` (bet re-clamp, misleading `totalBurned` stat, and visual reel strip using equal weights while results used weighted symbols). Scope was deliberately narrow — no new features, no code-smell cleanup, no touching the original `token-casino.html` or iteration 1 files.
+
+**Model Used:**
+Claude Opus 4.7 via Claude Code CLI. No skill files used.
+
+**Prompt Used:**
+
+I'm working on Iteration 2 of a team slot machine refactor. My role is "Debugger / Stabilizer." Iteration 1 split the monolith into clean files and identified bugs in src/iterations/iteration01/bugs.md — do NOT re-read the original src/token-casino.html, work from iteration 1's code.
+
+The iteration 2 starting point is src/iterations/iteration02/ (I've already copied iteration 1's output there). Your job: fix a specific subset of bugs from bugs.md while leaving everything else untouched.
+
+Fix these three bugs (and nothing else)
+
+Bug #2 — Bet input not re-clamped after balance changes.**
+Scenario: player bets 50, balance drops to 5. Bet input still shows 50. Next spin fails silently with "Insufficient tokens." Fix: after every balance change (win, loss, add/remove funds), re-clamp the bet input to min(currentBet, balance). If balance is 0, disable the spin button. Show a visible message if bet was auto-adjusted.
+
+Bug #1 — `totalBurned` misleadingly includes pair-payout losses.**
+Scenario: on a pair (×0.5), `totalBurned += Math.max(0, bet - winAmt)` counts the net loss as "burned," but the player got half their bet back — it wasn't burned, it was partial loss. Fix: `totalBurned` should only increment on full losses (no payout at all). Redefine or rename if needed for clarity. Update any UI that displays this stat accordingly.
+
+Bug #3 — Visual reel STRIP uses equal-frequency symbols while results use weighted symbols.**
+Scenario: the spinning animation shows every symbol with equal frequency, but actual spin outcomes are determined by SYMBOL_WEIGHTS (rare symbols really are rare). This makes the animation look like near-misses on rare symbols are happening way more than they actually can. Fix: make the STRIP reflect SYMBOL_WEIGHTS — e.g., if a symbol's weight is 1 and another's is 10, the strip should contain them in roughly that 1:10 ratio. Keep the strip length reasonable (don't let it explode into thousands of cells).
+
+Constraints
+
+- ONLY edit files in src/iterations/iteration02/. Do NOT touch iteration01/ or token-casino.html.
+- Do NOT add new features. Do NOT fix other bugs from bugs.md. Do NOT refactor code smells. We have other iterations for those.
+- Preserve JSDoc annotations. If you add new functions, give them JSDoc too.
+- Do NOT commit anything. I'll handle all git operations.
+- Run ESLint on the new files before declaring done. Fix any lint errors.
+- I have a local server running at http://localhost:8000 pointing at iteration02/, so I can verify as you go.
+- Before writing code, briefly plan each fix and surface any ambiguity. Ask before proceeding if anything is unclear.
+
+After you finish
+
+Create src/iterations/iteration02/fixes.md with one section per bug, showing:
+- The bug description
+- What you changed (high level, not full code)
+- How to reproduce the bug and verify the fix
+
+Start by reading src/iterations/iteration01/bugs.md and src/iterations/iteration02/script.js so you have context, then lay out your plan.
+
+**AI Output Summary:**
+Claude Code read `bugs.md` and `script.js` first, then laid out a plan before coding. All three fixes implemented in a single pass:
+- **Bug #3 (STRIP):** Rebuilt as a 54-cell weighted strip, shuffled once. Added a `STRIP_POSITIONS` lookup and `stripPositionFor()` helper so `spin()` passes actual strip positions to `animateReel()`. Parameter renamed to `targetStripPos` for clarity.
+- **Bug #1 (totalBurned):** Removed the `else` branch inflating `totalBurned` on pair payouts. Now only `type === 'lose'` increments it.
+- **Bug #2 (bet re-clamp):** Added four helpers — `reclampBet()`, `updateSpinAvailability()`, `showBetAdjustNotice()`, `clearBetAdjustNotice()`. Wired them into `spin()`, `addFunds()`, `awardWheelPrize()`, `resetGame()`, and the bet input handlers. Added a new `#bet-adjust-note` DOM element styled under the bet input to visibly inform the player when their bet was auto-adjusted.
+
+ESLint passed. `fixes.md` produced with reproduction + verification steps per-bug.
+
+**What you Used / Changed:**
+Kept all changes as-is. No hand-editing required.
+
+**Files Updated:**
+- `src/iterations/iteration02/index.html` (bet adjust notice element added)
+- `src/iterations/iteration02/styles.css` (styling for new notice)
+- `src/iterations/iteration02/script.js` (three bug fixes + four new helpers + JSDoc)
+- `src/iterations/iteration02/fixes.md` (new)
+
+**Result:**
+All three fixes verified in browser at http://localhost:8000.
+- **Bug #2:** Confirmed bet input auto-adjusts downward when balance drops below it, with visible notice. Spin button disables at balance 0.
+- **Bug #1:** Observed `totalBurned` only increments on full losses, not pair payouts.
+- **Bug #3:** Reel animation now visibly shows rare symbols less often, matching the weighted result logic.
+
+ESLint clean. No regressions noticed in side-by-side comparison with iteration 1.
+
+**Notes / Reflection:**
+- Narrow, explicit scope in the prompt worked well, Claude code stayed in its lane. Every bug I listed got fixed, nothing I didn't list got touched. the plan was understood by claude and it executed quicker.
+- The fix for bug #2 was more thorough than I expected four helpers and a new DOM element rather than a one liner. That's good defensive design (every balance change path now calls reclampBet), but it's the kind of thing that could snowball if we weren't careful with scope.
+- Requiring a fixes.md alongside the code was useful for forcing the AI to think about how a reviewer would verify each change which is a good habit to encode.
+- Phase 1 deliverables for my half are now complete.
