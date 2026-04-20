@@ -179,3 +179,39 @@ ESLint clean. No regressions noticed in side-by-side comparison with iteration 1
 - The fix for bug #2 was more thorough than I expected four helpers and a new DOM element rather than a one liner. That's good defensive design (every balance change path now calls reclampBet), but it's the kind of thing that could snowball if we weren't careful with scope.
 - Requiring a fixes.md alongside the code was useful for forcing the AI to think about how a reviewer would verify each change which is a good habit to encode.
 - Phase 1 deliverables for my half are now complete.
+
+
+
+## Iteration 3
+
+**Phase:** Phase 1 — Code Stability & Core Gameplay Loop
+
+**Team Member:** Patrick
+
+**Date & Time:** 2026-04-20
+
+**Task:**
+Fixed Bug #4 (near-miss detection unreachable) and Bug #5 (progressive jackpot not persisted on reload). Addressed Smell #7 (var → let/const), Smell #8 (magic numbers → named constants), and Smell #10 (input sanitization on custom funds).
+
+**Model Used:** Claude Opus 4.7 via Claude Code CLI
+
+**Prompt Used:**
+see ai-use-log.md — Iteration 3 prompt
+
+**AI Output Summary:**
+Rewrote script.js to replace all var declarations with let/const (zero var remaining). Extracted 8 named constants to the top of the file. Redefined checkNearMiss to fire when 2+ high-value symbols appear on a losing spin (previously dead code because pairs were caught first by calcPayout). Added localStorage persistence for the progressive jackpot with load/save/clear lifecycle. Replaced parseInt with strict Number validation in confirmCustomFunds, added visible error messages in the modal UI. Added error div to index.html and matching CSS.
+
+**What you Used / Changed:**
+All AI output was used. Near-miss logic was redesigned from matching-pair detection to high-value-symbol-count detection per discussion. All other changes applied as planned.
+
+**Files Updated:**
+- src/iterations/iteration03/script.js
+- src/iterations/iteration03/index.html
+- src/iterations/iteration03/styles.css
+- src/iterations/iteration03/changes.md
+
+**Result:**
+ESLint passes clean. All 5 fixes applied. Near-miss now fires on reachable conditions. Jackpot survives reload. Custom funds input rejects invalid values with visible feedback. No regressions in existing functionality.
+
+**Notes / Reflection:**
+The near-miss function was completely dead code in iterations 1-2 — it checked for matching pairs that calcPayout already handled. The new definition (2+ high-value symbols on a loss) is actually reachable and creates meaningful gameplay moments. Iteration 4 should consider addressing remaining code smells (#6 global state, #9 innerHTML, #11 empty catch blocks).
