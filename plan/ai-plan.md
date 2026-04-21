@@ -4,33 +4,34 @@
 
 Our team will use AI to iteratively build and improve a slot machine through **20 iterations across 6 phases**. Each team member completes **2 iterations**, including prompting AI, updating code, and logging work. Each iteration builds on the previous one.
 
-We primarily use **Claude Opus 4.6** for development. If other models (e.g., ChatGPT, Gemini) are used, they will be clearly documented in the AI Use Log.
+We primarily use **Claude Opus 4.6** for development. If other models are used, they will be clearly documented in the AI Use Log.
 
 ---
 
 ## Phase Plan
 
-### Phase 1 — Code Stability & Core Gameplay Loop (Iterations 1–4)
-**Goal:** Make the game fully functional and bug-free  
+### Phase 1 — Code Stability & Core Gameplay Loop (Iterations 1–4) ✓
+**Goal:** Make the game fully functional, clean, and bug-free
 
 **Responsibilities:**
-- break the final candidate from previous warm up to clear html, css, JS files.
-- Fix bugs (spin logic, payouts, crashes), make sure code structure follows principles of clean code.
-- Consider prompting the AI to find code logic weaknesses and edge cases.
-- Ensure reels spin and update correctly.
+- Split the final Lab 1 candidate into separate HTML, CSS, and JS files
+- Fix bugs (spin logic, payouts, crashes) and ensure code follows clean code principles
+- Audit the codebase for weaknesses and edge cases
+- Ensure reels spin and update correctly
 - Add basic systems (bet, balance, reset)
 
 **Team Members:**
-- Name — Iterations 1, 2
-- Name — Iterations 3, 4
+- Nikolas — Iterations 1, 2
+- Patrick — Iterations 3, 4
 
-
+---
 
 ### Phase 2 — Probability System & Slot Mechanics (Iterations 5–8)
-**Goal:** Make the game behave like a real slot machine  
+**Goal:** Make the game behave like a real slot machine
 
 **Responsibilities:**
-- Implement RNG (random spins)
+- Read `plan/research-overview.md` and `plan/raw-research/` before prompting — use the research to inform every decision
+- Implement and verify RNG (random spins)
 - Add symbol types (wild, scatter, multiplier)
 - Implement win conditions (paylines or matching system)
 - Balance payouts and win frequency
@@ -39,43 +40,45 @@ We primarily use **Claude Opus 4.6** for development. If other models (e.g., Cha
 - Name — Iterations 5, 6
 - Name — Iterations 7, 8
 
-
+---
 
 ### Phase 3 — Animation, Feedback & Visual Experience (Iterations 9–12)
-**Goal:** Make the game feel engaging and polished  
+**Goal:** Make the game feel engaging and polished
 
 **Responsibilities:**
+- Read `plan/research-overview.md` before prompting
 - Add reel animations (spin timing, stopping effects)
 - Add visual feedback (win highlights, effects)
-- Add sound (spin, win, jackpot)
-- Improve UI layout and theme
-- consider a specific theme and use uiux skill md files (western, robot, etc.) 
+- Improve sound design (spin, win, jackpot)
+- Improve UI layout and theme consistency
 
 **Team Members:**
 - Name — Iterations 9, 10
 - Name — Iterations 11, 12
 
-
+---
 
 ### Phase 4 — Gameplay Features & Controls (Iterations 13–16)
-**Goal:** Add modern slot machine features  
+**Goal:** Add modern slot machine features
 
 **Responsibilities:**
+- Read `plan/research-overview.md` before prompting
 - Add autoplay system
 - Add fast spin / speed control
 - Add history or stats tracking
-- Add settings (sound toggle, controls)
+- Add settings panel (sound toggle, controls)
 
 **Team Members:**
 - Name — Iterations 13, 14
 - Name — Iterations 15, 16
 
-
+---
 
 ### Phase 5 — Engagement & Retention (Iterations 17–20)
-**Goal:** Make users want to keep playing  
+**Goal:** Make users want to keep playing
 
 **Responsibilities:**
+- Read `plan/research-overview.md` before prompting
 - Add rewards (daily bonus, streaks)
 - Add progression (levels, milestones)
 - Add personalization (themes, UI options)
@@ -85,10 +88,10 @@ We primarily use **Claude Opus 4.6** for development. If other models (e.g., Cha
 - Name — Iterations 17, 18
 - Name — Iterations 19, 20
 
-
+---
 
 ### Phase 6 — Final Integration & Polish
-**Goal:** Finalize, clean, and unify the entire system  
+**Goal:** Finalize, clean, and unify the entire system
 
 **Responsibilities:**
 - Fix remaining bugs
@@ -100,20 +103,26 @@ We primarily use **Claude Opus 4.6** for development. If other models (e.g., Cha
 - Name
 - Name
 
+---
 
 ## Workflow Per Iteration
 
-- Start from previous version
-- Ask AI for improvements based on phase goals
-- Modify and integrate output
-- Save updated code under src/iterations/iteration0x
-- add to ai-use-log.md
+- Start from the previous iteration folder
+- Read relevant files as specified in the prompt before touching code
+- Prompt Claude Code with a clear, scoped task
+- Review and adjust AI output before accepting
+- Run ESLint and fix any issues before committing
+- Test in browser via local server
+- Log the iteration in `ai-use-log.md`
+- Commit yourself — do not let Claude commit
 
+---
 
 ## Guidelines
 
-- Each iteration must update code + log
-- Do not overwrite previous iterations
-- AI output must be reviewed and adjusted
-- Changes should align with phase goals
-- Any model used must be documented in the log
+- Each iteration must update code and produce a log entry
+- Do not overwrite previous iteration folders
+- AI output must be reviewed and adjusted — never accepted blindly
+- Hand-editing is a last resort — re-prompt first, and log it if you do hand-edit
+- Any model other than Claude Opus 4.6 must be documented in the log
+- Changes must align with the current phase goals
