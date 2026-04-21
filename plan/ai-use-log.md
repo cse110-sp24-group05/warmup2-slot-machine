@@ -288,3 +288,50 @@ All six issues resolved. Verified via grep: no bare catch blocks, no illegal inn
 
 **Notes / Reflection:**
 The STATE object refactor touched the most lines — every reference to balance, spinning, totalWon and similar variables changed to STATE.balance, STATE.spinning, STATE.totalWon. This is the kind of mechanical refactor that is easy to get wrong by hand but straightforward for AI. The playSound() wrapper eliminated around 15 individual try/catch blocks scattered through game logic — if a future phase needs a global mute toggle or audio system replacement, there is now exactly one place to change. Phase 2 is inheriting a clean, fully audited codebase with no known outstanding issues.
+
+## Iteration 5 
+
+**Phase:** Phase 2 - Core Mechanics
+
+**Team Member:** Zay
+
+**Date & Time:** 2026-04-20 
+
+**Task:**  
+Implement a proper RNG system using cryptographic randomness, rebalance the payout table to achieve a mathematically verified ~95% RTP (up from 33.6%), and add session RTP tracking so the math can be verified during play.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+I'm working on Iteration 5 of a team slot machine project. My role is "Logic Builder" under Phase 2 — Core Mechanics.
+
+Start by reading these files for context before doing anything:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration04/changes.md
+- src/iterations/iteration04/index.html
+- src/iterations/iteration04/script.js
+- src/iterations/iteration04/styles.css
+
+The starting point is src/iterations/iteration04/ (already copied from iteration03).
+
+Your job this iteration is to carry out iteration 5 (RNG system improvements/implement) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above.
+
+**AI Output Summary:**  
+Replaced all game-critical Math.random() calls with a secureRandom() wrapper around crypto.getRandomValues(). Rebalanced all payout multipliers (pairs from 0.5× to 2.4×, diamond jackpot from 50× to 150×, all others scaled proportionally) to achieve 95.09% theoretical RTP. Added PAYOUT_TABLE constant object so multipliers aren't magic numbers. Added STATE.totalWagered / STATE.totalReturned tracking and a live "session RTP" display in the token bar. Pre-computed TOTAL_WEIGHT to avoid recalculating on every spin. Added probability documentation in JSDoc comments. Updated HTML paytable to show new multipliers and theoretical RTP.
+
+**What you Used / Changed:**  
+All AI output used. No hand edits.
+
+**Files Updated:**  
+- src/iterations/iteration05/script.js
+- src/iterations/iteration05/index.html
+- src/iterations/iteration05/styles.css (unchanged from iteration 04)
+- src/iterations/iteration05/changes.md
+
+**Result:**  
+Node syntax check passes clean. Theoretical RTP verified at 95.09% via probability simulation. Hit frequency unchanged at 27.77%. All game-critical randomness now uses crypto.getRandomValues. Visual-only randomness (confetti, background, particles) intentionally left on Math.random since it doesn't affect outcomes.
+
+**Notes / Reflection:**  
+The biggest finding was that the existing RTP was only 33.61% — the player was losing 66 cents of every token. The research overview specifically warned that "players can tell when a game feels broken." Pairs were the key lever: they happen ~25% of the time, so bumping them from 0.5× (a loss) to 2.4× (a profit) accounted for ~61% of total RTP. This matches real slot design where frequent small wins sustain the session while rare jackpots provide excitement.

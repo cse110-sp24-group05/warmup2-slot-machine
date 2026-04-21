@@ -37,7 +37,7 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Balance payouts and win frequency
 
 **Team Members:**
-- Name — Iterations 5, 6
+- Zay — Iterations 5, 6
 - Name — Iterations 7, 8
 
 ---
