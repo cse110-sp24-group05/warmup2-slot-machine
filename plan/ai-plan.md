@@ -126,3 +126,4 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Hand-editing is a last resort — re-prompt first, and log it if you do hand-edit
 - Any model other than Claude Opus 4.6 must be documented in the log
 - Changes must align with the current phase goals
+- Claude is encouraged to make independent UI, UX, and design decisions if they align with research findings and improve the player experience — following proven slot machine conventions is preferred over preserving the current design when the two conflict
