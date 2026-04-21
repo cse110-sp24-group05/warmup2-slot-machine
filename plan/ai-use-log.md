@@ -193,10 +193,48 @@ ESLint clean. No regressions noticed in side-by-side comparison with iteration 1
 **Task:**
 Fixed Bug #4 (near-miss detection unreachable) and Bug #5 (progressive jackpot not persisted on reload). Addressed Smell #7 (var → let/const), Smell #8 (magic numbers → named constants), and Smell #10 (input sanitization on custom funds).
 
-**Model Used:** Claude Opus 4.7 via Claude Code CLI
+**Model Used:** Claude Opus 4.6 via Claude Code CLI
 
 **Prompt Used:**
-see ai-use-log.md — Iteration 3 prompt
+I'm working on Iteration 3 of a team slot machine refactor. My role is "Baseline Builder" under Phase 1 — Code Stability & Core Gameplay Loop.
+
+Start by reading these files for context before doing anything:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration01/bugs.md
+- src/iterations/iteration02/fixes.md
+- src/iterations/iteration03/script.js
+
+The starting point is src/iterations/iteration03/ (already copied from iteration02).
+
+Your job this iteration is to fix the two remaining functional bugs from bugs.md and address the highest-priority code smells to improve stability. Do not act on the research this iteration — read it for directional context only. Stability and clean code are the only goals here.
+
+Fix these two bugs:
+
+Bug #4 — Near-miss detection logic is confused.
+checkNearMiss fires when type === 'lose' and two symbols match, but calcPayout already handles pairs before near-miss can fire, making it unreachable for high-value pairs. Clarify the intent: near-miss should only fire when type === 'lose' and two symbols visually match but no payout was awarded. Make the logic explicit and add a JSDoc comment explaining exactly when it fires.
+
+Bug #5 — Progressive jackpot does not persist on page reload.
+The jackpot grows each spin but resets on reload. Fix: use localStorage to persist the jackpot value. Save after every spin, load on init. Fall back to the default starting value if no saved value exists.
+
+Address these code smells:
+
+Smell #7 — Replace all var declarations with let and const throughout script.js. Use const for values that never reassign, let for everything else.
+
+Smell #8 — Replace all magic numbers with named constants at the top of script.js. At minimum: cell height (96), initial jackpot (5000), starting balance (1000), jackpot contribution rate (0.08), bonus wheel trigger interval (10), history display limit (8).
+
+Smell #10 — Add input sanitization to confirmCustomFunds. Reject non-numeric input, show a visible error message if the value is invalid, and prevent the function from silently doing nothing on bad input.
+
+Constraints:
+- ONLY edit files in src/iterations/iteration03/
+- Do NOT touch any other iteration folders or token-casino.html
+- Do NOT add new features or fix anything not listed above
+- Preserve all existing JSDoc annotations. Add JSDoc to any new functions
+- Do NOT commit anything. I handle all git operations
+- Run ESLint before declaring done and fix any lint errors
+- I have a local server running at http://localhost:8080 pointing at iteration03/
+
+Before writing any code, read all files listed above and lay out your plan. Surface any ambiguities or design decisions before proceeding. Ask before acting if anything is unclear.
 
 **AI Output Summary:**
 Rewrote script.js to replace all var declarations with let/const (zero var remaining). Extracted 8 named constants to the top of the file. Redefined checkNearMiss to fire when 2+ high-value symbols appear on a losing spin (previously dead code because pairs were caught first by calcPayout). Added localStorage persistence for the progressive jackpot with load/save/clear lifecycle. Replaced parseInt with strict Number validation in confirmCustomFunds, added visible error messages in the modal UI. Added error div to index.html and matching CSS.
@@ -215,3 +253,38 @@ ESLint passes clean. All 5 fixes applied. Near-miss now fires on reachable condi
 
 **Notes / Reflection:**
 The near-miss function was completely dead code in iterations 1-2 — it checked for matching pairs that calcPayout already handled. The new definition (2+ high-value symbols on a loss) is actually reachable and creates meaningful gameplay moments. Iteration 4 should consider addressing remaining code smells (#6 global state, #9 innerHTML, #11 empty catch blocks).
+
+
+
+## Iteration 4
+
+**Phase:** Phase 1 — Code Stability & Core Gameplay Loop
+
+**Team Member:** Patrick
+
+**Date & Time:** 2026-04-20
+
+**Task:**
+Address six remaining code quality issues from the iteration 1 audit (#6, #9, #11, #12, #13, #15) to improve maintainability, safety, and accessibility. No new bug fixes — all five bugs were resolved in iterations 2 and 3. This iteration closes out Phase 1 cleanly.
+
+**Model Used:** Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**
+see ai-use-log.md — Iteration 4 prompt
+
+**AI Output Summary:**
+Consolidated all mutable game state into a single STATE object, eliminating scattered top-level variables. Replaced innerHTML string concatenation in buildReel and addHistory with proper DOM methods. Converted remaining string concatenation to template literals throughout. Replaced all empty catch blocks with descriptive console.warn logging. Extracted the CSS animation restart hack into a named forceReflow() utility with JSDoc. Added a SOUND_MAP and playSound() wrapper to decouple audio from game logic, and made speak() self-guarding. Added keyboard support (Enter/Space) on the lever for accessibility. Updated changes.md to document all six fixes with verification steps. Removed a stale fixes.md that was an accidental copy from iteration02.
+
+**What you Used / Changed:**
+All AI output used as-is. The changes.md was rewritten from scratch since the copied version still referenced iteration03. The stale fixes.md was deleted since this iteration contains no bug fixes.
+
+**Files Updated:**
+- src/iterations/iteration04/script.js
+- src/iterations/iteration04/changes.md (rewritten)
+- src/iterations/iteration04/fixes.md (deleted — not applicable this iteration)
+
+**Result:**
+All six issues resolved. Verified via grep: no bare catch blocks, no illegal innerHTML usage, no top-level state variables remaining. Template literals used throughout. Lever responds to keyboard input. ESLint passes clean. No regressions in existing functionality. All 15 items from the iteration01 audit are now fully resolved across iterations 2 through 4.
+
+**Notes / Reflection:**
+The STATE object refactor touched the most lines — every reference to balance, spinning, totalWon and similar variables changed to STATE.balance, STATE.spinning, STATE.totalWon. This is the kind of mechanical refactor that is easy to get wrong by hand but straightforward for AI. The playSound() wrapper eliminated around 15 individual try/catch blocks scattered through game logic — if a future phase needs a global mute toggle or audio system replacement, there is now exactly one place to change. Phase 2 is inheriting a clean, fully audited codebase with no known outstanding issues.
