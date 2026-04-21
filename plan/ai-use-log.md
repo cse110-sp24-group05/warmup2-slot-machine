@@ -476,3 +476,189 @@ ESLint passes clean. The clickability bug is resolved — all buttons, lever, th
 
 **Notes / Reflection:**  
 The clickability bug turned out to be the same `file://` + `type="module"` CORS issue identified in iteration 1's notes — it was introduced when the original monolith was split into separate files. Iteration 1 documented the workaround (use a local server) but never fixed the root cause, so when iteration 07 inherited the same `type="module"` tag, the bug resurfaced for anyone testing without a server. The fix (`defer` instead of `module`) is backward-compatible and eliminates the need for a local server entirely. The rounding loss was a subtler issue — `Math.floor(bet / 3)` lost up to 2 tokens per spin silently, which over hundreds of spins measurably depressed session RTP. Fractional division with late flooring preserves the theoretical 96.50% across all bet sizes. Phase 2 (iterations 5–8) is now complete.
+
+
+## Iteration 9
+
+**Phase:** Phase 3 - Design/UI Changes
+**Team Member:** Jared Rosas
+
+**Date & Time:** 2026-04-21 14:01
+
+**Task:**  
+Change UI so that is resembles a theme (animals), eliminate unecessary content so that user can see all items on the page simultaneously. Make user experience simple but also interactive
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+You are redesigning a browser-based slot machine UI.
+
+Context:
+There are 3 files:
+- index.html
+- style.css
+- script.js
+
+Goal:
+Improve DESIGN and USER EXPERIENCE to feel like a high-end Vegas casino machine (MGM Grand style).
+
+---
+
+PRIORITY 1: REMOVE CONTENT
+Remove the following completely:
+- Theme toggle
+- “// where your computer budget goes to die”
+- “open 24/7”
+- “no max bet”
+- “+ lucky today”
+
+Also:
+- No text starting with “//” anywhere
+
+---
+
+PRIORITY 2: LAYOUT (CRITICAL)
+- The slot machine must fill the entire screen width
+- EVERYTHING visible at once (no scrolling)
+- Exception: paytable can be hidden or modal
+- No stacked vertical overflow
+
+---
+
+PRIORITY 3: THEME / VISUAL DESIGN
+Theme: Luxury Safari Casino
+
+Inspiration:
+- MGM Grand
+- Gold, wealth, royalty
+
+Visual elements:
+- Gold-dominant background
+- Emerald / ruby accents
+- Shiny / metallic gradients
+- Glow effects
+
+Animals:
+- Two jaguars on left/right
+- Large lion behind or under the title
+- Title: “Safari Casino”
+
+---
+
+PRIORITY 4: JACKPOTS
+- 3 jackpot tiers
+- Biggest prize = largest font, most emphasis
+- Clear visual hierarchy
+
+---
+
+PRIORITY 5: SYMBOLS / PAYTABLE
+Replace robots with:
+- 🦁 🐆 👑 💎 🪙
+
+---
+
+OUTPUT FORMAT:
+Return FULL updated versions of:
+- index.html
+- style.css
+- script.js
+
+Make sure:
+- Clean structure
+- No unused elements
+- Responsive but no scrolling required
+
+
+**AI Output Summary:**  
+Everything is wired correctly. Here's a summary of what was delivered across all three files:
+
+  ---
+  index.html — Full redesign:
+  - Title changed to "Safari Casino" with 🦁 lion icon
+  - Removed: theme toggle, subtitle, neon signs ("open 24/7", "no max bet", "lucky today"), all // text
+  - 3-tier jackpot bar: Grand (progressive + 💎💎💎), Major (🦁🦁🦁 50×), Mini (🐆🐆🐆 40×) — largest font/glow on Grand
+  - Paytable moved to modal — button opens it, keeps main view clean
+  - Two jaguar panels (🐆) flanking the center column
+  - History section removed from DOM (state still tracked internally)
+  - All labels updated: "tokens" → "chips", "refill context" → "refill", etc.
+
+  style.css — Full luxury safari theme:
+  - overflow: hidden on html, body — zero scrolling
+  - Full viewport flex layout: header → jackpot tiers → stats bar → game area (jaguars + center + lever)
+  - Gold metallic CSS variables (#d4af37, #ffd700, #b8860b) with emerald wins and ruby losses
+  - Cinzel font for title/headers (Roman luxury feel), Space Mono for data
+  - Metallic gradient border on machine panel using background-clip: padding-box trick
+  - Jaguar panels with gold glow animation (jaguarGlow keyframe)
+  - Gold lever knob and shaft
+  - Cell height reduced to 80px so 3-reel window = 240px total — fits without scroll
+
+  script.js — Updated game logic:
+  - CELL_HEIGHT = 80 to match CSS
+  - 5 main symbols: 💎 DIAMOND, 🦁 LION, 🐆 JAGUAR, 👑 CROWN, 🪙  COIN + 7 supporting + WILD/SCATTER/MULTIPLIER
+  - Payout combos: LION PRIDE, JAGUAR HUNT, ROYAL FLUSH, GOLD RUSH, SAFARI TRIO, ROYAL HUNT, etc.
+  - All flavor text updated to safari/luxury theme
+  - Theme system removed entirely (hardcoded gold 212,175,55 for background canvas)
+  - Confetti updated to gold/ruby/emerald palette
+  - openPaytableModal / closePaytableModal functions added
+
+
+**What you Used / Changed:**  
+All AI output used. No hand edits.
+
+**Files Updated:**  
+src/iterations/iteration09/index.html  
+src/iterations/iteration09/script.js  
+src/iterations/iteration09/styles.css
+
+**Result:**  
+ESLint passes clean. The clickability bug is resolved — all buttons, lever, theme swatches, and bet controls respond when the page is opened via `file://`. The rounding loss is eliminated: for bet=11, a single-line pair now pays `Math.floor(11/3 * 2) = 7` instead of the old `Math.floor(3 * 2) = 6`, closing the systematic gap. The token bar displays all five stat cards in a single row. All existing JSDoc annotations preserved.
+
+**Notes / Reflection:**  
+The UI looks much cleaner and simple. The satire humor is still incorporated with thte theme of the animals. There is an invisible button at the button that becomes visible when hovered over it, this serves as bug. Level moves left to right which is not traditional to how levers move in real life. Slots are much smaller than liked on the screen.
+
+## Iteration 10
+
+**Phase:** Phase 3 - Design/UI Changes
+**Team Member:** Jared Rosas
+
+**Date & Time:** 2026-04-21 15:51
+
+**Task:**  
+Update lever to move vertically instead of horizontlly. Rescaled slot sizes to be proportional to screen and box wrapper.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+This looks great—I really like the direction and overall concept. I just have two refinement requests:
+
+Slot Size & Proportion
+The slots are currently too small relative to their container (wrapper), which creates a lot of empty space. Please increase the size of the reels and symbols so they fill most of the available space (around 90–95% of the container). The goal is for the slot area to feel large and proportional, similar to a real casino machine.
+Lever Motion
+The lever currently moves side-to-side, but it would feel more realistic if it moved vertically. Please change the interaction so the lever pulls down and then returns back up, mimicking the motion of a real slot machine lever. If possible, add a slight snap-back or bounce to make the motion feel more natural.
+
+**AI Output Summary:**  
+ Lever motion
+  - Removed the left/right rotation (rotate(-30deg) → rotate(30deg))
+  - The arm now starts at the top of the groove (top: 6px) and slides down 74 px when pulled (leverPullDown keyframe, 0.14 s ease-in)
+  - On release it snaps back with an overshoot bounce (leverSnapUp keyframe: overshoots −12 px, settles through +5 px, −2 px, then rests at 0 — 0.44 s spring
+   easing)
+  - The shaft was shortened from 88 px → 48 px so the knob travels the full length of the groove without clipping
+  - The base plate z-index raised to 3 so it always sits on top as a clean socket at the bottom
+  - lever-wrap gained overflow: hidden to keep the arm clipped within the card
+
+**What you Used / Changed:**  
+All AI output used. No hand edits.
+
+**Files Updated:**  
+src/iterations/iteration10/index.html  
+src/iterations/iteration10/script.js  
+src/iterations/iteration10/styles.css  
+
+**Result:**  
+ESLint passes clean. The clickability bug is resolved — all buttons, lever, theme swatches, and bet controls respond when the page is opened via `file://`. The rounding loss is eliminated: for bet=11, a single-line pair now pays `Math.floor(11/3 * 2) = 7` instead of the old `Math.floor(3 * 2) = 6`, closing the systematic gap. The token bar displays all five stat cards in a single row. All existing JSDoc annotations preserved.
+
+**Notes / Reflection:**  
+The slots fill up a lot of space making it resemble closely to a real life slot machine. The only issue is the hidden spin button at the bottom that only becomes visible if cursor hovers over it.
