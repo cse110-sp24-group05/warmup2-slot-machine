@@ -335,3 +335,38 @@ Node syntax check passes clean. Theoretical RTP verified at 95.09% via probabili
 
 **Notes / Reflection:**  
 The biggest finding was that the existing RTP was only 33.61% — the player was losing 66 cents of every token. The research overview specifically warned that "players can tell when a game feels broken." Pairs were the key lever: they happen ~25% of the time, so bumping them from 0.5× (a loss) to 2.4× (a profit) accounted for ~61% of total RTP. This matches real slot design where frequent small wins sustain the session while rare jackpots provide excitement.
+
+## Iteration 6 
+
+**Phase:** Phase 2 - Core Mechanics
+
+**Team Member:** Zay
+
+**Date & Time:** 2026-04-21  
+
+**Task:**  
+Add three special symbol types: Wild (substitutes for any regular symbol to complete combos), Scatter (pays based on count anywhere on reels, 3 scatters award free spins), and Multiplier (doubles any win it appears in). Rebalance the payout table to maintain fair RTP with the new mechanics.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+Continue from iteration05, Carry out iteration-6 (special symbol types) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above. 
+
+**AI Output Summary:**  
+Added 3 new symbols to the SYMBOLS array: WILD (🃏, weight 1), SCATTER (⭐, weight 1), MULTIPLIER (🔥, weight 1). Rewrote calcPayout() into a multi-stage evaluation: count scatters first (pay independently), resolve wilds via brute-force substitution (triples/combos only, not pairs), then apply multiplier doubling. Added resolveWilds() and basePayoutCheck() helper functions. Lowered pair payout from 2.4× to 2.0× to compensate for wild/multiplier RTP boost. Added STATE.freeSpinBank for scatter-awarded free spins that auto-activate on subsequent spins. Added 4 new sound functions (soundWild, soundScatter, soundMultiplier, soundFreeSpins) registered in SOUND_MAP. Added flavor text in MSGS and SPEECH for scatter, wild, multiplier, and freespins message pools. Updated HTML paytable with a new "special symbols" section. Added CSS for wild-reel, scatter-reel, multiplier-reel glow highlights and paytable color coding.
+
+**What you Used / Changed:**  
+All AI output used.
+
+**Files Updated:**  
+- src/iterations/iteration06/script.js
+- src/iterations/iteration06/index.html
+- src/iterations/iteration06/styles.css
+- src/iterations/iteration06/changes.md
+
+**Result:**  
+Node syntax check passes clean. Theoretical RTP verified at 96.50% via probability simulation across all 3,375 combinations. Three new symbols appear on reels at 1.75% frequency each. Wild successfully substitutes into triples and named combos but not pairs. Scatter pays independently and awards free spins on triple. Multiplier doubles base wins. Free spin bank system correctly queues and consumes scatter-awarded spins.
+
+**Notes / Reflection:**  
+The biggest design challenge was preventing the Wild symbol from breaking RTP. Unrestricted wild substitution (including pairs) would have pushed RTP to ~140% because wilds turn almost every spin into at least a pair. The solution was restricting wilds to triples and named combos only — this keeps the "wow" factor of wild completions while keeping the math honest. The resolveWilds() function uses brute-force search across all 12 possible substitutions (or 144 for two wilds), which is fast enough at 3 reels but would need optimization for 5-reel machines. Pair payout dropped from 2.4× to 2.0× to compensate, which still feels fair since pairs are now supplemented by wild/multiplier bonus wins. Phase 2 iterations 5-6 are complete and the game now has a proper RNG, mathematically verified payouts, and modern slot mechanics.
