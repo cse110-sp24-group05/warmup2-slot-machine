@@ -1,12 +1,13 @@
 # Do not select: Copy this template and paste it below for each new iteration, then replace “Iteration X” and fill in all fields.
--------
 
-## Iteration X 
+---
+
+## Iteration X
 
 **Phase:**  
-**Team Member:**  
+**Team Member:**
 
-**Date & Time:**  
+**Date & Time:**
 
 **Task:**  
 (what you were trying to do)
@@ -31,8 +32,6 @@
 
 **Notes / Reflection:**  
 (optional: what you learned, what you'd do differently, what's left for next step)
-
-
 
 ## Iteration 1
 
@@ -59,7 +58,6 @@ index.html (markup only, linking to the other two files)
 styles.css (all styling)
 script.js (all JavaScript, using ES modules / import-export)
 
-
 Do NOT fix bugs or change behavior yet — just separate concerns. The split version should behave identically to the original.
 Add JSDoc comments with type annotations on every function in script.js.
 Create src/iterations/iteration01/bugs.md listing any bugs, code smells, or issues you noticed while reading the code. Do NOT fix them — iteration 2 handles fixes. Just list and describe them.
@@ -80,6 +78,7 @@ Before writing any code, the AI produced a structural breakdown of the source fi
 Kept all four output files as-is. Did not hand-edit any code. bugs.md identified 5 functional bugs and 10 code smells. This will be the roadmap for iteration 2.
 
 **Files Updated:**
+
 - `src/iterations/iteration01/index.html` (new)
 - `src/iterations/iteration01/styles.css` (new)
 - `src/iterations/iteration01/script.js` (new)
@@ -91,13 +90,12 @@ Works, but with one caveat. The split version is functionally identical to the o
 ESLint passes cleanly. Side-by-side browser testing (split at :8000, original at :8001) confirmed identical behavior.
 
 **Notes / Reflection:**
+
 - The AI volunteering design questions before coding was the single biggest efficiency win. Would have had to revise otherwise.
 - "Cleaner code" introduced a real usability regression (needs a server). This is exactly the kind of subtle trade-off the assignment flags — AI output was technically correct but operationally different. Worth discussing in the final report.
 - We should either add a `package.json` script like `"start": "python3 -m http.server 8000"` or document the server requirement in the repo README so teammates don't hit the same confusion.
 - bugs.md is solid and actionable — iteration 2 has a clear priority list. Top candidates to fix first: bet-input re-clamping (#2), misleading `totalBurned` stat (#1), and jackpot persistence (#5) if there's time.
 - I did NOT need to hand-edit any code in this iteration.
-
-
 
 ## Iteration 2
 
@@ -121,13 +119,13 @@ The iteration 2 starting point is src/iterations/iteration02/ (I've already copi
 
 Fix these three bugs (and nothing else)
 
-Bug #2 — Bet input not re-clamped after balance changes.**
+Bug #2 — Bet input not re-clamped after balance changes.\*\*
 Scenario: player bets 50, balance drops to 5. Bet input still shows 50. Next spin fails silently with "Insufficient tokens." Fix: after every balance change (win, loss, add/remove funds), re-clamp the bet input to min(currentBet, balance). If balance is 0, disable the spin button. Show a visible message if bet was auto-adjusted.
 
-Bug #1 — `totalBurned` misleadingly includes pair-payout losses.**
+Bug #1 — `totalBurned` misleadingly includes pair-payout losses.\*\*
 Scenario: on a pair (×0.5), `totalBurned += Math.max(0, bet - winAmt)` counts the net loss as "burned," but the player got half their bet back — it wasn't burned, it was partial loss. Fix: `totalBurned` should only increment on full losses (no payout at all). Redefine or rename if needed for clarity. Update any UI that displays this stat accordingly.
 
-Bug #3 — Visual reel STRIP uses equal-frequency symbols while results use weighted symbols.**
+Bug #3 — Visual reel STRIP uses equal-frequency symbols while results use weighted symbols.\*\*
 Scenario: the spinning animation shows every symbol with equal frequency, but actual spin outcomes are determined by SYMBOL_WEIGHTS (rare symbols really are rare). This makes the animation look like near-misses on rare symbols are happening way more than they actually can. Fix: make the STRIP reflect SYMBOL_WEIGHTS — e.g., if a symbol's weight is 1 and another's is 10, the strip should contain them in roughly that 1:10 ratio. Keep the strip length reasonable (don't let it explode into thousands of cells).
 
 Constraints
@@ -143,6 +141,7 @@ Constraints
 After you finish
 
 Create src/iterations/iteration02/fixes.md with one section per bug, showing:
+
 - The bug description
 - What you changed (high level, not full code)
 - How to reproduce the bug and verify the fix
@@ -151,6 +150,7 @@ Start by reading src/iterations/iteration01/bugs.md and src/iterations/iteration
 
 **AI Output Summary:**
 Claude Code read `bugs.md` and `script.js` first, then laid out a plan before coding. All three fixes implemented in a single pass:
+
 - **Bug #3 (STRIP):** Rebuilt as a 54-cell weighted strip, shuffled once. Added a `STRIP_POSITIONS` lookup and `stripPositionFor()` helper so `spin()` passes actual strip positions to `animateReel()`. Parameter renamed to `targetStripPos` for clarity.
 - **Bug #1 (totalBurned):** Removed the `else` branch inflating `totalBurned` on pair payouts. Now only `type === 'lose'` increments it.
 - **Bug #2 (bet re-clamp):** Added four helpers — `reclampBet()`, `updateSpinAvailability()`, `showBetAdjustNotice()`, `clearBetAdjustNotice()`. Wired them into `spin()`, `addFunds()`, `awardWheelPrize()`, `resetGame()`, and the bet input handlers. Added a new `#bet-adjust-note` DOM element styled under the bet input to visibly inform the player when their bet was auto-adjusted.
@@ -161,6 +161,7 @@ ESLint passed. `fixes.md` produced with reproduction + verification steps per-bu
 Kept all changes as-is. No hand-editing required.
 
 **Files Updated:**
+
 - `src/iterations/iteration02/index.html` (bet adjust notice element added)
 - `src/iterations/iteration02/styles.css` (styling for new notice)
 - `src/iterations/iteration02/script.js` (three bug fixes + four new helpers + JSDoc)
@@ -168,6 +169,7 @@ Kept all changes as-is. No hand-editing required.
 
 **Result:**
 All three fixes verified in browser at http://localhost:8000.
+
 - **Bug #2:** Confirmed bet input auto-adjusts downward when balance drops below it, with visible notice. Spin button disables at balance 0.
 - **Bug #1:** Observed `totalBurned` only increments on full losses, not pair payouts.
 - **Bug #3:** Reel animation now visibly shows rare symbols less often, matching the weighted result logic.
@@ -175,12 +177,11 @@ All three fixes verified in browser at http://localhost:8000.
 ESLint clean. No regressions noticed in side-by-side comparison with iteration 1.
 
 **Notes / Reflection:**
+
 - Narrow, explicit scope in the prompt worked well, Claude code stayed in its lane. Every bug I listed got fixed, nothing I didn't list got touched. the plan was understood by claude and it executed quicker.
 - The fix for bug #2 was more thorough than I expected four helpers and a new DOM element rather than a one liner. That's good defensive design (every balance change path now calls reclampBet), but it's the kind of thing that could snowball if we weren't careful with scope.
 - Requiring a fixes.md alongside the code was useful for forcing the AI to think about how a reviewer would verify each change which is a good habit to encode.
 - Phase 1 deliverables for my half are now complete.
-
-
 
 ## Iteration 3
 
@@ -199,6 +200,7 @@ Fixed Bug #4 (near-miss detection unreachable) and Bug #5 (progressive jackpot n
 I'm working on Iteration 3 of a team slot machine refactor. My role is "Baseline Builder" under Phase 1 — Code Stability & Core Gameplay Loop.
 
 Start by reading these files for context before doing anything:
+
 - plan/ai-plan.md
 - plan/research-overview.md
 - src/iterations/iteration01/bugs.md
@@ -226,6 +228,7 @@ Smell #8 — Replace all magic numbers with named constants at the top of script
 Smell #10 — Add input sanitization to confirmCustomFunds. Reject non-numeric input, show a visible error message if the value is invalid, and prevent the function from silently doing nothing on bad input.
 
 Constraints:
+
 - ONLY edit files in src/iterations/iteration03/
 - Do NOT touch any other iteration folders or token-casino.html
 - Do NOT add new features or fix anything not listed above
@@ -243,6 +246,7 @@ Rewrote script.js to replace all var declarations with let/const (zero var remai
 All AI output was used. Near-miss logic was redesigned from matching-pair detection to high-value-symbol-count detection per discussion. All other changes applied as planned.
 
 **Files Updated:**
+
 - src/iterations/iteration03/script.js
 - src/iterations/iteration03/index.html
 - src/iterations/iteration03/styles.css
@@ -253,8 +257,6 @@ ESLint passes clean. All 5 fixes applied. Near-miss now fires on reachable condi
 
 **Notes / Reflection:**
 The near-miss function was completely dead code in iterations 1-2 — it checked for matching pairs that calcPayout already handled. The new definition (2+ high-value symbols on a loss) is actually reachable and creates meaningful gameplay moments. Iteration 4 should consider addressing remaining code smells (#6 global state, #9 innerHTML, #11 empty catch blocks).
-
-
 
 ## Iteration 4
 
@@ -279,6 +281,7 @@ Consolidated all mutable game state into a single STATE object, eliminating scat
 All AI output used as-is. The changes.md was rewritten from scratch since the copied version still referenced iteration03. The stale fixes.md was deleted since this iteration contains no bug fixes.
 
 **Files Updated:**
+
 - src/iterations/iteration04/script.js
 - src/iterations/iteration04/changes.md (rewritten)
 - src/iterations/iteration04/fixes.md (deleted — not applicable this iteration)
@@ -289,13 +292,13 @@ All six issues resolved. Verified via grep: no bare catch blocks, no illegal inn
 **Notes / Reflection:**
 The STATE object refactor touched the most lines — every reference to balance, spinning, totalWon and similar variables changed to STATE.balance, STATE.spinning, STATE.totalWon. This is the kind of mechanical refactor that is easy to get wrong by hand but straightforward for AI. The playSound() wrapper eliminated around 15 individual try/catch blocks scattered through game logic — if a future phase needs a global mute toggle or audio system replacement, there is now exactly one place to change. Phase 2 is inheriting a clean, fully audited codebase with no known outstanding issues.
 
-## Iteration 5 
+## Iteration 5
 
 **Phase:** Phase 2 - Core Mechanics
 
 **Team Member:** Zay
 
-**Date & Time:** 2026-04-20 
+**Date & Time:** 2026-04-20
 
 **Task:**  
 Implement a proper RNG system using cryptographic randomness, rebalance the payout table to achieve a mathematically verified ~95% RTP (up from 33.6%), and add session RTP tracking so the math can be verified during play.
@@ -307,6 +310,7 @@ Claude Opus 4.6 via Claude Code CLI
 I'm working on Iteration 5 of a team slot machine project. My role is "Logic Builder" under Phase 2 — Core Mechanics.
 
 Start by reading these files for context before doing anything:
+
 - plan/ai-plan.md
 - plan/research-overview.md
 - src/iterations/iteration04/changes.md
@@ -324,7 +328,8 @@ Replaced all game-critical Math.random() calls with a secureRandom() wrapper aro
 **What you Used / Changed:**  
 All AI output used. No hand edits.
 
-**Files Updated:**  
+**Files Updated:**
+
 - src/iterations/iteration05/script.js
 - src/iterations/iteration05/index.html
 - src/iterations/iteration05/styles.css (unchanged from iteration 04)
@@ -336,13 +341,13 @@ Node syntax check passes clean. Theoretical RTP verified at 95.09% via probabili
 **Notes / Reflection:**  
 The biggest finding was that the existing RTP was only 33.61% — the player was losing 66 cents of every token. The research overview specifically warned that "players can tell when a game feels broken." Pairs were the key lever: they happen ~25% of the time, so bumping them from 0.5× (a loss) to 2.4× (a profit) accounted for ~61% of total RTP. This matches real slot design where frequent small wins sustain the session while rare jackpots provide excitement.
 
-## Iteration 6 
+## Iteration 6
 
 **Phase:** Phase 2 - Core Mechanics
 
 **Team Member:** Zay
 
-**Date & Time:** 2026-04-21  
+**Date & Time:** 2026-04-21
 
 **Task:**  
 Add three special symbol types: Wild (substitutes for any regular symbol to complete combos), Scatter (pays based on count anywhere on reels, 3 scatters award free spins), and Multiplier (doubles any win it appears in). Rebalance the payout table to maintain fair RTP with the new mechanics.
@@ -351,7 +356,7 @@ Add three special symbol types: Wild (substitutes for any regular symbol to comp
 Claude Opus 4.6 via Claude Code CLI
 
 **Prompt Used:**  
-Continue from iteration05, Carry out iteration-6 (special symbol types) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above. 
+Continue from iteration05, Carry out iteration-6 (special symbol types) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above.
 
 **AI Output Summary:**  
 Added 3 new symbols to the SYMBOLS array: WILD (🃏, weight 1), SCATTER (⭐, weight 1), MULTIPLIER (🔥, weight 1). Rewrote calcPayout() into a multi-stage evaluation: count scatters first (pay independently), resolve wilds via brute-force substitution (triples/combos only, not pairs), then apply multiplier doubling. Added resolveWilds() and basePayoutCheck() helper functions. Lowered pair payout from 2.4× to 2.0× to compensate for wild/multiplier RTP boost. Added STATE.freeSpinBank for scatter-awarded free spins that auto-activate on subsequent spins. Added 4 new sound functions (soundWild, soundScatter, soundMultiplier, soundFreeSpins) registered in SOUND_MAP. Added flavor text in MSGS and SPEECH for scatter, wild, multiplier, and freespins message pools. Updated HTML paytable with a new "special symbols" section. Added CSS for wild-reel, scatter-reel, multiplier-reel glow highlights and paytable color coding.
@@ -359,7 +364,8 @@ Added 3 new symbols to the SYMBOLS array: WILD (🃏, weight 1), SCATTER (⭐, w
 **What you Used / Changed:**  
 All AI output used.
 
-**Files Updated:**  
+**Files Updated:**
+
 - src/iterations/iteration06/script.js
 - src/iterations/iteration06/index.html
 - src/iterations/iteration06/styles.css
@@ -370,3 +376,83 @@ Node syntax check passes clean. Theoretical RTP verified at 96.50% via probabili
 
 **Notes / Reflection:**  
 The biggest design challenge was preventing the Wild symbol from breaking RTP. Unrestricted wild substitution (including pairs) would have pushed RTP to ~140% because wilds turn almost every spin into at least a pair. The solution was restricting wilds to triples and named combos only — this keeps the "wow" factor of wild completions while keeping the math honest. The resolveWilds() function uses brute-force search across all 12 possible substitutions (or 144 for two wilds), which is fast enough at 3 reels but would need optimization for 5-reel machines. Pair payout dropped from 2.4× to 2.0× to compensate, which still feels fair since pairs are now supplemented by wild/multiplier bonus wins. Phase 2 iterations 5-6 are complete and the game now has a proper RNG, mathematically verified payouts, and modern slot mechanics.
+
+## Iteration 7
+
+**Phase:** 2
+**Team Member:** Pranav Puttagunta
+
+**Date & Time:** 2026-04-21 07:04
+
+**Task:**  
+Implement a 3-row reel display with 3 active horizontal paylines. Each spin should show a 3×3 grid of symbols (3 reels × 3 visible rows), evaluate all three rows as independent paylines at bet÷3 tokens each, highlight winning rows with colour-coded overlays, and show numbered sidebar markers indicating which lines paid.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+I'm working on Iteration 7 of a team slot machine project. My role is "System Enhancer" under Phase 2 — Core Mechanics.
+
+Start by reading these files for context before doing anything:
+
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration06/changes.md
+- src/iterations/iteration06/index.html
+- src/iterations/iteration06/script.js
+- src/iterations/iteration06/styles.css
+
+The starting point is src/iterations/iteration06/ (already copied from iteration05).
+
+Your job this iteration is to carry out iteration 7 (Win condition implementation/paylines or matching system) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above.
+
+IMPORTANT: DO NOT commit, stage changes, or push to git. Also DO NOT edit the research documents, only edit files in iteration07
+
+**AI Output Summary:**  
+The AI read all six context files before writing a line of code, then designed a payline system around the existing STRIP animation. Key outputs: added `REEL_ROWS` and `ACTIVE_PAYLINES` constants; added a `STRIP_SYMBOL_IDX` pre-computed lookup to avoid per-spin `indexOf` calls; refactored `buildReel` to use a `makeReelCell` helper and prepend/append phantom cells so wrap-around rows display correctly; bumped `animateReel`'s `totalCells` to `STRIP.length + 2`; added `getRowSymbolIndices` and `setPaylineHighlights` helpers; rewrote the `spin()` `.then()` block to evaluate 3 paylines independently, aggregate wins, and append a `[LINE N]` label to the message; updated `initReels` to clear highlights on reset. HTML received the `.reels-area` wrapper with left/right `.payline-sidebar` panels, 3 `.row-highlight` and 3 `.payline` divs per reel-wrap, and an updated paytable header. CSS changed reel height from 96px to 288px, added row separator pseudo-elements, and added all new payline and highlight classes. Full `changes.md` produced with 5 documented changes and verify steps.
+
+**What you Used / Changed:**  
+All AI output used. No hand edits.
+
+**Files Updated:**  
+src/iterations/iteration07/script.js  
+src/iterations/iteration07/index.html  
+src/iterations/iteration07/styles.css  
+src/iterations/iteration07/changes.md
+
+**Result:**  
+The visual changes render correctly — three rows of symbols are visible in each reel, row separators appear between rows, and the numbered payline markers appear on both sides of the reels. However, the spin button and all other interactive controls are unresponsive; nothing is clickable on the page. The layout changes appear to have broken event binding or introduced a JavaScript error that prevents the script from fully initialising.
+
+**Notes / Reflection:**  
+The payline logic itself is mathematically sound — `getRowSymbolIndices` correctly wraps STRIP edges, payline evaluation aggregates wins across all three rows, and the CSS overlay system is cleanly separated from the existing reel animation. The structural approach (phantom cells, unchanged scroll offset formula) is solid and avoids rewriting the animation. The interactivity bug is almost certainly a runtime JavaScript error triggered by the new DOM structure (the `.reels-area` wrapper or the additional child elements inside `.reel-wrap`) conflicting with an event listener or querySelector that expects the old layout. This should be the first thing investigated in iteration 8 — likely a null-reference error or a selector mismatch that prevents the script from reaching its event-binding section. RTP recalibration for the `Math.floor(bet / 3)` rounding loss should also be addressed in iteration 8 as noted in `changes.md`.
+
+## Iteration X
+
+**Phase:**  
+**Team Member:**
+
+**Date & Time:**
+
+**Task:**  
+(what you were trying to do)
+
+**Model Used:**  
+(Claude Opus include any skills.md used)
+
+**Prompt Used:**  
+(paste exactly what you asked AI)
+
+**AI Output Summary:**  
+(briefly describe what the AI returned)
+
+**What you Used / Changed:**  
+(what you actually kept, modified, or ignored)
+
+**Files Updated:**  
+(e.g., iterations/iteration-03/index.html)
+
+**Result:**  
+(did it work? what improved? any issues?)
+
+**Notes / Reflection:**  
+(optional: what you learned, what you'd do differently, what's left for next step)

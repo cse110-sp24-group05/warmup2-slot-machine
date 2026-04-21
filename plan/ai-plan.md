@@ -11,9 +11,11 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 ## Phase Plan
 
 ### Phase 1 — Code Stability & Core Gameplay Loop (Iterations 1–4) ✓
+
 **Goal:** Make the game fully functional, clean, and bug-free
 
 **Responsibilities:**
+
 - Split the final Lab 1 candidate into separate HTML, CSS, and JS files
 - Fix bugs (spin logic, payouts, crashes) and ensure code follows clean code principles
 - Audit the codebase for weaknesses and edge cases
@@ -21,15 +23,18 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Add basic systems (bet, balance, reset)
 
 **Team Members:**
+
 - Nikolas — Iterations 1, 2
 - Patrick — Iterations 3, 4
 
 ---
 
 ### Phase 2 — Probability System & Slot Mechanics (Iterations 5–8)
+
 **Goal:** Make the game behave like a real slot machine
 
 **Responsibilities:**
+
 - Read `plan/research-overview.md` and `plan/raw-research/` before prompting — use the research to inform every decision
 - Implement and verify RNG (random spins)
 - Add symbol types (wild, scatter, multiplier)
@@ -37,15 +42,18 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Balance payouts and win frequency
 
 **Team Members:**
+
 - Zay — Iterations 5, 6
-- Name — Iterations 7, 8
+- Pranav — Iterations 7, 8
 
 ---
 
 ### Phase 3 — Animation, Feedback & Visual Experience (Iterations 9–12)
+
 **Goal:** Make the game feel engaging and polished
 
 **Responsibilities:**
+
 - Read `plan/research-overview.md` before prompting
 - Add reel animations (spin timing, stopping effects)
 - Add visual feedback (win highlights, effects)
@@ -53,15 +61,18 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Improve UI layout and theme consistency
 
 **Team Members:**
+
 - Name — Iterations 9, 10
 - Name — Iterations 11, 12
 
 ---
 
 ### Phase 4 — Gameplay Features & Controls (Iterations 13–16)
+
 **Goal:** Add modern slot machine features
 
 **Responsibilities:**
+
 - Read `plan/research-overview.md` before prompting
 - Add autoplay system
 - Add fast spin / speed control
@@ -69,15 +80,18 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Add settings panel (sound toggle, controls)
 
 **Team Members:**
+
 - Name — Iterations 13, 14
 - Name — Iterations 15, 16
 
 ---
 
 ### Phase 5 — Engagement & Retention (Iterations 17–20)
+
 **Goal:** Make users want to keep playing
 
 **Responsibilities:**
+
 - Read `plan/research-overview.md` before prompting
 - Add rewards (daily bonus, streaks)
 - Add progression (levels, milestones)
@@ -85,21 +99,25 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Add engagement features (leaderboard, sharing)
 
 **Team Members:**
+
 - Name — Iterations 17, 18
 - Name — Iterations 19, 20
 
 ---
 
 ### Phase 6 — Final Integration & Polish
+
 **Goal:** Finalize, clean, and unify the entire system
 
 **Responsibilities:**
+
 - Fix remaining bugs
 - Improve UI/UX consistency
 - Ensure all features work together
 - Clean and refactor code
 
 **Team Members (Leads):**
+
 - Name
 - Name
 
