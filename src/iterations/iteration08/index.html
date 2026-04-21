@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Casino — where compute goes to die</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="screen-flash"></div>
+
+  <div id="wrap">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="title">Token Casino</div>
+      <div class="subtitle">// where your compute budget goes to die</div>
+
+      <div class="neon-signs">
+        <span class="neon-on">&#9679; OPEN 24/7</span>
+        <span class="neon-dim">&#9670; NO MAX BET</span>
+        <span class="neon-on2">&#9733; LUCKY TODAY</span>
+      </div>
+
+      <div class="header-controls">
+        <div class="theme-row">
+          <span class="theme-label">THEME:</span>
+          <button class="theme-swatch active" data-theme="purple"
+            style="background:linear-gradient(135deg,#a78bfa,#f472b6)" title="Neural Purple"></button>
+          <button class="theme-swatch" data-theme="gold" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"
+            title="Casino Gold"></button>
+          <button class="theme-swatch" data-theme="green" style="background:linear-gradient(135deg,#4ade80,#22c55e)"
+            title="Matrix Green"></button>
+          <button class="theme-swatch" data-theme="red" style="background:linear-gradient(135deg,#f87171,#ef4444)"
+            title="Vegas Red"></button>
+          <button class="theme-swatch" data-theme="cyan" style="background:linear-gradient(135deg,#38bdf8,#06b6d4)"
+            title="Cyber Blue"></button>
+        </div>
+        <button class="speech-toggle active" id="speech-toggle"
+          title="Toggle AI Voice">&#x1F50A; AI Voice</button>
+      </div>
+    </div>
+
+    <!-- Progressive Jackpot Bar -->
+    <div class="progressive-bar">
+      <span class="pj-label">&#x26A1; PROGRESSIVE JACKPOT</span>
+      <span class="pj-amount" id="pj-amount">5,000</span>
+      <span class="pj-hint">hit &#x1F48E;&#x1F48E;&#x1F48E; to claim</span>
+    </div>
+
+    <!-- Token bar -->
+    <div class="token-bar">
+      <div class="tcard">
+        <div class="tcard-label">balance</div>
+        <div class="tcard-val" id="balance">1000</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">won</div>
+        <div class="tcard-val" id="won">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">burned</div>
+        <div class="tcard-val" id="burned">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">spins</div>
+        <div class="tcard-val" id="spins">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">session RTP</div>
+        <div class="tcard-val" id="rtp-display">&mdash;</div>
+      </div>
+    </div>
+
+    <!-- Add Funds Row -->
+    <div class="funds-row">
+      <span class="funds-label">Add Tokens:</span>
+      <button class="add-btn" data-amount="100">+100</button>
+      <button class="add-btn" data-amount="500">+500</button>
+      <button class="add-btn" data-amount="1000">+1,000</button>
+      <button class="add-btn" data-amount="5000">+5,000</button>
+      <button class="add-btn add-btn-custom" id="open-funds-modal-btn">Custom &#x2726;</button>
+    </div>
+
+    <!-- Machine + Lever -->
+    <div class="machine-container">
+
+      <div class="machine" id="machine">
+
+        <div class="reels-area">
+          <div class="payline-sidebar" id="payline-sidebar-l">
+            <div class="payline-marker" id="pl-mark-0">1</div>
+            <div class="payline-marker" id="pl-mark-1">2</div>
+            <div class="payline-marker" id="pl-mark-2">3</div>
+          </div>
+          <div class="reels" id="reels-row">
+            <div class="reel-wrap" id="reel-wrap-0">
+              <div class="reel-inner" id="reel0"></div>
+              <div class="row-highlight row-highlight-top" id="rh-0-top"></div>
+              <div class="row-highlight row-highlight-mid" id="rh-0-mid"></div>
+              <div class="row-highlight row-highlight-bot" id="rh-0-bot"></div>
+              <div class="payline payline-top"></div>
+              <div class="payline payline-mid"></div>
+              <div class="payline payline-bot"></div>
+            </div>
+            <div class="reel-wrap" id="reel-wrap-1">
+              <div class="reel-inner" id="reel1"></div>
+              <div class="row-highlight row-highlight-top" id="rh-1-top"></div>
+              <div class="row-highlight row-highlight-mid" id="rh-1-mid"></div>
+              <div class="row-highlight row-highlight-bot" id="rh-1-bot"></div>
+              <div class="payline payline-top"></div>
+              <div class="payline payline-mid"></div>
+              <div class="payline payline-bot"></div>
+            </div>
+            <div class="reel-wrap" id="reel-wrap-2">
+              <div class="reel-inner" id="reel2"></div>
+              <div class="row-highlight row-highlight-top" id="rh-2-top"></div>
+              <div class="row-highlight row-highlight-mid" id="rh-2-mid"></div>
+              <div class="row-highlight row-highlight-bot" id="rh-2-bot"></div>
+              <div class="payline payline-top"></div>
+              <div class="payline payline-mid"></div>
+              <div class="payline payline-bot"></div>
+            </div>
+          </div>
+          <div class="payline-sidebar" id="payline-sidebar-r">
+            <div class="payline-marker" id="pl-mark-r0">1</div>
+            <div class="payline-marker" id="pl-mark-r1">2</div>
+            <div class="payline-marker" id="pl-mark-r2">3</div>
+          </div>
+        </div>
+
+        <div class="msg-box" id="msg">Insert tokens to hallucinate wealth</div>
+
+        <div class="btn-row">
+          <button id="spin-btn">&#9654; Spin (costs tokens)</button>
+          <button id="reset-btn">&#8635; Refill context</button>
+        </div>
+
+        <div class="bet-row">
+          <span>Bet:</span>
+          <input type="number" id="bet" value="10" min="1" step="1">
+          <span>tokens</span>
+        </div>
+
+        <div class="bet-adjust-note" id="bet-adjust-note"></div>
+
+        <div class="bet-presets">
+          <button class="bet-preset" data-bet="5">5</button>
+          <button class="bet-preset" data-bet="10">10</button>
+          <button class="bet-preset" data-bet="25">25</button>
+          <button class="bet-preset" data-bet="50">50</button>
+          <button class="bet-preset" data-bet="100">100</button>
+          <button class="bet-preset" data-bet="250">250</button>
+          <button class="bet-preset" data-bet="max">MAX</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section-title">// paytable &mdash; 3 active paylines &mdash; RTP: 96.50% per line</div>
+        <div class="paytable-note">Payouts apply to bet&divide;3 per line. Multiple lines can win simultaneously.</div>
+
+        <div class="pay-row highlight-jackpot"><span>&#x1F48E;&#x1F48E;&#x1F48E; Diamond Jackpot +
+            PROGRESSIVE</span><span>&#xD7;150 + POOL</span></div>
+        <div class="pay-row highlight-bigwin"><span>&#x1F916;&#x1F916;&#x1F916; AGI Singularity</span>
+          <span>&#xD7;50</span></div>
+        <div class="pay-row highlight-bigwin"><span>&#x1F4B0;&#x1F4B0;&#x1F4B0; Money Bags</span> <span>&#xD7;40</span>
+        </div>
+        <div class="pay-row highlight-bigwin"><span>&#x1F52E;&#x1F52E;&#x1F52E; Oracle Vision</span>
+          <span>&#xD7;30</span></div>
+        <div class="pay-row highlight-bigwin"><span>&#x1F9E0;&#x1F9E0;&#x1F9E0; Neural Overflow</span>
+          <span>&#xD7;25</span></div>
+        <div class="pay-row highlight-combo"><span>&#x1F48E;+&#x1F4B0;+&#x1F916; Singularity Combo</span>
+          <span>&#xD7;25</span></div>
+        <div class="pay-row highlight-combo"><span>&#x1F48E;+&#x1F916;+&#x1F9E0; AI Trinity</span> <span>&#xD7;18</span>
+        </div>
+        <div class="pay-row"><span>&#x1F9E0;+&#x1F52E;+&#x1F9EC; Neural Net</span> <span>&#xD7;15</span></div>
+        <div class="pay-row"><span>Any 3 of a kind</span> <span>&#xD7;15</span></div>
+        <div class="pay-row"><span>&#x1F916;+&#x1F4BE;+&#x26A1; Compute Stack</span> <span>&#xD7;12</span></div>
+        <div class="pay-row"><span>&#x1F680;+&#x26A1;+&#x1F3AF; Hyper Drive</span> <span>&#xD7;10</span></div>
+        <div class="pay-row highlight-pair"><span>Any 2 of a kind</span> <span>&#xD7;2</span></div>
+        <div class="pay-row"><span>No match (thermodynamically inevitable)</span> <span>burned</span></div>
+
+        <div class="divider"></div>
+        <div class="section-title">// special symbols</div>
+
+        <div class="pay-row highlight-wild"><span>&#x1F0CF; WILD &mdash; substitutes for any regular symbol</span>
+          <span>completes combos</span></div>
+        <div class="pay-row highlight-scatter"><span>&#x2B50;&#x2B50; Scatter &times;2 (pays anywhere)</span>
+          <span>&#xD7;5</span></div>
+        <div class="pay-row highlight-scatter"><span>&#x2B50;&#x2B50;&#x2B50; Scatter &times;3 + FREE SPINS</span>
+          <span>&#xD7;20 + 3 free</span></div>
+        <div class="pay-row highlight-multiplier"><span>&#x1F525; Multiplier &mdash; doubles any win it appears in</span>
+          <span>&#xD7;2 boost</span></div>
+
+        <div class="divider" id="hist-divider" style="display:none"></div>
+        <div class="history" id="hist-wrap">
+          <div class="section-title">// recent transactions</div>
+          <div class="hist-list" id="hist-list"></div>
+        </div>
+
+      </div><!-- .machine -->
+
+      <!-- Lever -->
+      <div class="lever-card">
+        <div class="lever-label">PULL</div>
+        <div class="lever-wrap" id="lever-wrap" title="Pull the lever to spin!">
+          <div class="lever-groove"></div>
+          <div class="lever-arm" id="lever-arm">
+            <div class="lever-knob"></div>
+            <div class="lever-shaft"></div>
+          </div>
+          <div class="lever-base-plate"></div>
+        </div>
+        <div class="lever-arrow">&#9660;</div>
+      </div>
+
+    </div><!-- .machine-container -->
+
+  </div><!-- #wrap -->
+
+  <!-- Funds Modal -->
+  <div class="modal-overlay" id="funds-modal">
+    <div class="modal-box" id="modal-box">
+      <div class="modal-title">&#x1F4B0; Add Tokens</div>
+      <div class="modal-subtitle">// reload the compute budget, no questions asked</div>
+      <div class="modal-presets">
+        <button class="modal-preset" data-amount="100">+100 &#x1FA99;</button>
+        <button class="modal-preset" data-amount="500">+500 &#x1FA99;</button>
+        <button class="modal-preset" data-amount="1000">+1,000 &#x1FA99;</button>
+        <button class="modal-preset" data-amount="5000">+5,000 &#x1FA99;</button>
+        <button class="modal-preset" data-amount="10000">+10,000 &#x1FA99;</button>
+        <button class="modal-preset" data-amount="50000">+50,000 &#x1FA99;</button>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-custom-row">
+        <input class="modal-input" type="number" id="custom-amount" placeholder="Custom amount..." min="1"
+          max="10000000">
+        <button class="modal-confirm-btn" id="confirm-custom-btn">Add</button>
+      </div>
+      <div class="custom-funds-error" id="custom-funds-error"></div>
+      <button class="modal-cancel-btn" id="cancel-funds-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Bonus Wheel Modal -->
+  <div class="modal-overlay" id="bonus-modal">
+    <div class="modal-box">
+      <div class="modal-title">&#x1F3A1; BONUS WHEEL</div>
+      <div class="modal-subtitle">// the algorithm feels generous every 10 spins</div>
+      <div class="bonus-spins-badge" id="bonus-spins-badge">SPIN #<span id="bonus-spin-num">10</span></div>
+      <div class="wheel-container">
+        <canvas id="wheel-canvas" width="260" height="260"></canvas>
+        <div class="wheel-pointer"></div>
+      </div>
+      <div id="wheel-result"></div>
+      <button class="wheel-spin-btn" id="wheel-spin-btn">&#x1F3B0; SPIN THE WHEEL</button>
+      <button class="modal-cancel-btn" id="wheel-close-btn"
+        style="display:none;margin-top:10px">Collect &amp; Continue &#x2192;</button>
+    </div>
+  </div>
+
+  <script defer src="script.js"></script>
+</body>
+
+</html>

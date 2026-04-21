@@ -379,7 +379,7 @@ The biggest design challenge was preventing the Wild symbol from breaking RTP. U
 
 ## Iteration 7
 
-**Phase:** 2
+**Phase:** Phase 2 - Core Mechanics  
 **Team Member:** Pranav Puttagunta
 
 **Date & Time:** 2026-04-21 07:04
@@ -426,33 +426,53 @@ The visual changes render correctly — three rows of symbols are visible in eac
 **Notes / Reflection:**  
 The payline logic itself is mathematically sound — `getRowSymbolIndices` correctly wraps STRIP edges, payline evaluation aggregates wins across all three rows, and the CSS overlay system is cleanly separated from the existing reel animation. The structural approach (phantom cells, unchanged scroll offset formula) is solid and avoids rewriting the animation. The interactivity bug is almost certainly a runtime JavaScript error triggered by the new DOM structure (the `.reels-area` wrapper or the additional child elements inside `.reel-wrap`) conflicting with an event listener or querySelector that expects the old layout. This should be the first thing investigated in iteration 8 — likely a null-reference error or a selector mismatch that prevents the script from reaching its event-binding section. RTP recalibration for the `Math.floor(bet / 3)` rounding loss should also be addressed in iteration 8 as noted in `changes.md`.
 
-## Iteration X
+## Iteration 8
 
-**Phase:**  
-**Team Member:**
+**Phase:** Phase 2 - Core Mechanics  
+**Team Member:** Pranav Puttagunta
 
-**Date & Time:**
+**Date & Time:** 2026-04-21 12:01
 
 **Task:**  
-(what you were trying to do)
+Balance payouts and improve fairness for the 3-payline system introduced in iteration 07. Fix the clickability bug that left the entire page unresponsive after iteration 07. Correct the token-bar grid layout and fix the systematic rounding loss in per-line bet calculation that silently reduced effective RTP below the theoretical 96.50%.
 
 **Model Used:**  
-(Claude Opus include any skills.md used)
+Claude Opus 4.6 via Claude Code CLI
 
 **Prompt Used:**  
-(paste exactly what you asked AI)
+I'm working on Iteration 8 of a team slot machine project. My role is "System Enhancer" under Phase 2 — Core Mechanics.
+
+Start by reading these files for context before doing anything:
+
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration07/changes.md
+- src/iterations/iteration07/index.html
+- src/iterations/iteration07/script.js
+- src/iterations/iteration07/styles.css
+
+The starting point is src/iterations/iteration07/ (already copied from iteration06).
+
+Your job this iteration is to carry out iteration 8 (balance payouts and improve fairness) per the Phase 2 plan in the plan/ai-plan.md file. Do NOT edit any other iteration folders or token-casino.html, and PRESERVE all existing JSDoc annotations. Do NOT add new features or fix anything not listed above.
+
+IMPORTANT: DO NOT commit, stage changes, or push to git. Also DO NOT edit the research documents, only edit files in iteration08
+
+Note that after iteration 7, nothing on the site was clickable or functional, so please fix that bug.
 
 **AI Output Summary:**  
-(briefly describe what the AI returned)
+The AI read all six context files, then traced the full diff between iteration06 and iteration07 to diagnose the clickability bug. Root cause identified: `<script type="module">` silently fails on `file://` protocol due to browser CORS policy — the script never executes, so no event listeners attach. Fix: replaced with `<script defer>` which provides the same deferred execution without the CORS restriction. The code uses no `import`/`export` so `type="module"` was unnecessary. Additionally fixed the `lineBet` rounding loss by changing from `Math.floor(bet / 3)` (integer) to `bet / 3` (fractional), flooring only the final per-line payout and adding a `Math.max(1, ...)` guard for minimum-bet viability. Fixed the token-bar grid from `repeat(4, 1fr)` to `repeat(5, 1fr)` for the 5-card layout. Corrected stale probability documentation in `weightedSymbol()` JSDoc (denominators said /54, actual TOTAL_WEIGHT is 57; 3 special symbols were missing). Used the previously unused `REEL_ROWS` constant in payline construction to resolve an ESLint warning. ESLint passes clean.
 
 **What you Used / Changed:**  
-(what you actually kept, modified, or ignored)
+All AI output used. No hand edits.
 
 **Files Updated:**  
-(e.g., iterations/iteration-03/index.html)
+src/iterations/iteration08/index.html  
+src/iterations/iteration08/script.js  
+src/iterations/iteration08/styles.css  
+src/iterations/iteration08/changes.md
 
 **Result:**  
-(did it work? what improved? any issues?)
+ESLint passes clean. The clickability bug is resolved — all buttons, lever, theme swatches, and bet controls respond when the page is opened via `file://`. The rounding loss is eliminated: for bet=11, a single-line pair now pays `Math.floor(11/3 * 2) = 7` instead of the old `Math.floor(3 * 2) = 6`, closing the systematic gap. The token bar displays all five stat cards in a single row. All existing JSDoc annotations preserved.
 
 **Notes / Reflection:**  
-(optional: what you learned, what you'd do differently, what's left for next step)
+The clickability bug turned out to be the same `file://` + `type="module"` CORS issue identified in iteration 1's notes — it was introduced when the original monolith was split into separate files. Iteration 1 documented the workaround (use a local server) but never fixed the root cause, so when iteration 07 inherited the same `type="module"` tag, the bug resurfaced for anyone testing without a server. The fix (`defer` instead of `module`) is backward-compatible and eliminates the need for a local server entirely. The rounding loss was a subtler issue — `Math.floor(bet / 3)` lost up to 2 tokens per spin silently, which over hundreds of spins measurably depressed session RTP. Fractional division with late flooring preserves the theoretical 96.50% across all bet sizes. Phase 2 (iterations 5–8) is now complete.
