@@ -931,6 +931,7 @@ Before doing anything, read these files for context:
 
 
 I'm working on iteration #15 of a safari-themed slot machine project. For this iteration, the goal is to add a history and stats tracking feature. 
+
 Your job is to create iteration #15, all code goes under src/iterations/iteration15:
 
 
@@ -938,7 +939,11 @@ Your job is to create iteration #15, all code goes under src/iterations/iteratio
 * Add another button next to the history button. When clicked, this button will display to the user their stats during the session. This includes the number of times the user spins the machine, average bet size of the user, and the biggest win so far.
 * To do this, both the history and stats need to be actively tracked.
 * Do not change any other features in the game.
-Important: Do NOT edit any files outside of src/iterations/iteration15. Do NOT commit, stage, or push any changes to git.
+
+Important: Do NOT edit any files outside of src/iterations/iteration15. 
+
+Do NOT commit, stage, or push any changes to git.
+
 Once you finish, record the changes you made inside a file changes.md
 
 
@@ -955,7 +960,62 @@ All code generated from the AI was used as is. No additional changes or hand edi
 - src/iterations/iteration15/changes.md
 
 **Result:**  
-The task was accomplished successfully with no issues. The are now two buttons fixed at the bottom left corner of the screen. One button displays history and the other displays various aspects of the user's stats in the current session. 
+The task was accomplished successfully with no issues. There are now two buttons fixed at the bottom left corner of the screen. One button displays history and the other displays various aspects of the user's stats in the current session. 
 
 **Notes / Reflection:**  
 The AI actually went above and beyond on the feature implementation. Even though it was not specified to do so in the prompt, it time-stamped and color coded each history entry to match a big win / partial win / lose. Additionally, it formatted the stats page as a 3x2 grid. For the next step (iteration 16), a settings menu will be implemented where the user will be able to toggle all sounds freely including sound effects of the machine, the ai voiceover (already an existing feature), and (possibly) music if desired. Additionally, in this settings panel, keyboard support can be toggled on or off. (i.e. pressing space or enter on your keyboard can also trigger the spin besides just clicking on the lever or spin button).
+
+## Iteration 16
+
+**Phase:** 4 - Gameplay Features and Controls  
+**Team Member:** Jaylen
+
+**Date & Time:** April 22nd, 2026, 5:07 AM 
+
+**Task:**  
+Add a settings panel where you are able to toggle the ai voiceover and the sound effects of spinning the slot machine. Additionally, you are able to enable or disable keyboard controls (i.e. the space and enter key spins the machine).
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+Before doing anything, read these files for context:
+* plan/ai-plan.md
+* plan/research-overview.md
+* src/iterations/iteration15/changes.md
+* src/iterations/iteration15/index.html
+* src/iterations/iteration15/script.js
+* src/iterations/iteration15/style.css
+
+I'm working on iteration #16 of a safari-themed slot machine project. For this iteration, the goal is to add a settings feature where we can freely toggle all sound including the sound effects of spinning the slot machine as well as the voiceover. Inside this settings panel we can also freely enable or disable keyboard controls. For example clicking the space or enter key can spin the slot machine too.
+
+Your job is to create iteration #16, all code goes under src/iterations/iteration16:
+
+* Add a button at the bottom right corner that when clicked, opens the settings menu. Inside this menu, there will be checkboxes for the sound effects of spinning the slot machine as well as the voiceover. When the checkbox is checked, this will enable the corresponding sound effect, and when the checkbox is unchecked, this will disable the corresponding sound effect.
+* Additionally, in the settings menu, there will also be a checkbox to enable or disable keyboard controls. This is listed below the sound toggle feature which is also in the settings menu.
+* Do not change any other features in the game.
+
+Important: Do NOT edit any files outside of src/iterations/iteration16. 
+
+Do NOT commit, stage, or push any changes to git.
+
+Once you finish, record the changes you made inside a file changes.md
+
+
+**AI Output Summary:**  
+After reading all context files, the AI copied over the existing code from iteration15 and worked on top of the existing code, by adding the specified features. 
+
+**What you Used / Changed:**  
+All code generated from the AI was used as is. No additional changes or hand edits.
+
+**Files Updated:**  
+- src/iterations/iteration16/script.js
+- src/iterations/iteration16/index.html
+- src/iterations/iteration16/style.css
+- src/iterations/iteration16/changes.md
+
+**Result:**  
+The task was accomplished successfully with no issues. However, there are some things to note. For instance, the ai voiceover button that already existed near the title area was not deleted (didn't specify in prompt). Additionally, when using keyboard controls to spin the slot machine, the lever would not be pulled, the slot machine would just spin. This is intended behavior though, since clicking the spin button doesn't cause the lever to activate either.
+
+**Notes / Reflection:**  
+The feature was successfully implemented with no issues, besides if we unanimously decide to remove that other voiceover button near the title. For the next steps and following iterations, some things we can possibly look to debug would be the long-persisting visual bugs involving the invisible buttons (including the paytable, refill, spin, and fast spin, and bet amounts) on the interface of the slot machine. 
