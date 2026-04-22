@@ -83,7 +83,7 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 **Team Members:**
 
 - Hanwen Chen — Iterations 13, 14
-- Name — Iterations 15, 16
+- Jaylen Cun — Iterations 15, 16
 
 ---
 

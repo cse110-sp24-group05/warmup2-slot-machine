@@ -907,3 +907,52 @@ Comparing current CSS with Iteration 12 styling rules
 Checking whether button visibility depends on hover state or class toggles
 Ensuring no recent JavaScript updates are resetting button visibility states on load
 
+## Iteration 15
+
+**Phase:** 4 - Gameplay Features and Controls  
+**Team Member:** Jaylen
+
+**Date & Time:** April 22nd, 2026, 04:33 AM 
+
+**Task:**  
+Add History and Stats Tracking Functionalities to the Slot Machine, without touching any other existing features.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+Before doing anything, read these files for context:
+plan/ai-plan.md
+plan/research-overview.md
+src/iterations/iteration14/changes.md
+src/iterations/iteration14/index.html
+src/iterations/iteration14/script.js
+src/iterations/iteration14/style.css
+I'm working on iteration #15 of a safari-themed slot machine project. For this iteration, the goal is to add a history and stats tracking feature. 
+Your job is to create iteration #15, all code goes under src/iterations/iteration15:
+Add a button at the bottom left corner that when clicked, allows the user to view a history of all their recent spins. This list will include things like bet size, symbols landed, and any winnings. You can limit this history to track up to the last 100 spins before the oldest spin gets removed from the history list to make room for the newest spins. 
+Add another button next to the history button. When clicked, this button will display to the user their stats during the session. This includes the number of times the user spins the machine, average bet size of the user, and the biggest win so far.
+To do this, both the history and stats need to be actively tracked.
+Do not change any other features in the game.
+Important: Do NOT edit any files outside of src/iterations/iteration15. Do NOT commit, stage, or push any changes to git.
+Once you finish, record the changes you made inside a file changes.md
+
+
+**AI Output Summary:**  
+After reading all context files, the AI copied over the existing code from iteration14 and added the specified features on top of the existing code. 
+
+**What you Used / Changed:**  
+All code generated from the AI was used as is. No additional changes or hand edits.
+
+**Files Updated:**  
+src/iterations/iteration15/script.js
+src/iterations/iteration15/index.html
+src/iterations/iteration15/style.css
+src/iterations/iteration15/changes.md
+
+**Result:**  
+The task was accomplished successfully with no issues. The are now two buttons fixed at the bottom left corner of the screen. One button displays history and the other displays various aspects of the user's stats in the current session. 
+
+**Notes / Reflection:**  
+(optional: what you learned, what you'd do differently, what's left for next step)
+The AI actually went above and beyond on the feature implementation. Even though it was not specified to do so in the prompt, it time-stamped and color coded each history entry to match a big win / partial win / lose. Additionally, it formatted the stats page as a 3x2 grid. For the next step (iteration 16), a settings menu will be implemented where the user will be able to toggle all sounds freely including sound effects of the machine, the ai voiceover (already an existing feature), and (possibly) music if desired. Additionally, in this settings panel, keyboard support can be toggled on or off. (i.e. pressing space or enter on your keyboard can also trigger the spin besides just clicking on the lever or spin button).
