@@ -101,8 +101,8 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 
 **Team Members:**
 
-- Name — Iterations 17, 18
-- Name — Iterations 19, 20
+- Lisa Tran — Iterations 17, 18
+- Jayden Xie — Iterations 19, 20
 
 ---
 
