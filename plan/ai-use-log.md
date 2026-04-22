@@ -1082,6 +1082,7 @@ All AI output used. Nothing changes.
 ## Iteration 18
 
 **Phase:** Phase 5 — Engagement & Retention
+
 **Team Member:** Lisa Tran, Jayden Xie
 
 **Date & Time:** 01:00PM 2026-04-22
@@ -1114,7 +1115,7 @@ Do NOT commit, stage, or push any changes to git.
 Once you finish, record the changes you made inside a file changes.md
 
 **AI Output Summary:**  
-It read through all the existing code, understood the architecture, and added the entire progression system in one pass. It modified weightedSymbol() to apply a difficulty factor based on rank, hooked updateProgressionAfterSpin() into the spin callback, and built out the full progression UI — a compact XP bar on the main screen, a Rank button, and a detailed progression modal with rank display missions, reward previews, difficulty info, and a tier overview grid. Everything persists to localStorage.
+It read through all the existing code, understood the architecture, and added the entire progression system in one pass. It modified weightedSymbol() to apply a difficulty factor based on rank, hooked updateProgressionAfterSpin() into the spin callback, and built out the full progression UI. A compact XP bar on the main screen, a Rank button, and a detailed progression modal with rank display missions, reward previews, difficulty info, and a tier overview grid. Everything persists to localStorage.
 
 **What you Used / Changed:**  
 Kept everything as is. The AI's output was clean and didn't break any existing features. The XP curve, mission scaling, and reward amounts all felt reasonable without needing tweaks.
@@ -1126,7 +1127,7 @@ Kept everything as is. The AI's output was clean and didn't break any existing f
   - iteration18/changes.md — documented everything
 
 **Result:**  
-Works well. XP ticks up as you spin, levels feel progressively harder to reach, missions give you short-term goals each level, and the checkpoint rewards at 15/30/60 hit satisfyingly hard with confetti and coin rain. Difficulty scaling is subtle but noticeable at higher ranks — rare symbols genuinely show up less. No regressions in existing features.
+Works well. XP ticks up as you spin, levels feel progressively harder to reach, missions give you short-term goals each level, and the checkpoint rewards at 15/30/60 hit satisfyingly hard with confetti and coin rain. Difficulty scaling is subtle but noticeable at higher ranks, rare symbols genuinely show up less. No regressions in existing features.
 
 **Notes / Reflection:**  
 The typeof getDifficultyFactor guard in weightedSymbol was a smart touch since that function runs before the progression code is defined.
