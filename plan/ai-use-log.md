@@ -1204,7 +1204,7 @@ The CSS override approach using custom properties was clean and didn't require r
   - src/iterations/iteration19/changes.md — documented all changes
 
 **Result:**  
-(did it work? what improved? any issues?)
+All three themes apply instantly on click and persist across page reloads. All buttons, text, modals, and controls stay readable in every theme. No gameplay changes.
 
 **Notes / Reflection:**  
 The theme specific selectors mostly handle things that were hardcoded, like the gradients on the machine frame or lever. Now, it also hardcoded the colors. If we wanted to add more themes later, just another body class with variable overrides.
