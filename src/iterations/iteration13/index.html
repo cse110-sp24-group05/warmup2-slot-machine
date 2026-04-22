@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Casino</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+  <div id="screen-flash"></div>
+
+  <div id="wrap">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="lion-bg">🦁</div>
+      <div class="title">Safari Casino</div>
+      <button class="speech-toggle active" id="speech-toggle" title="Toggle Voice">🔊 Voice</button>
+    </div>
+
+    <!-- 3-Tier Jackpot Bar -->
+    <div class="jackpot-tiers">
+      <div class="jt-tier jt-grand">
+        <div class="jt-syms">💎💎💎</div>
+        <div class="jt-label">GRAND JACKPOT</div>
+        <div class="jt-amount" id="pj-amount">5,000</div>
+        <div class="jt-sub">progressive · hit 💎💎💎 to claim</div>
+      </div>
+      <div class="jt-tier jt-major">
+        <div class="jt-syms">🦁🦁🦁</div>
+        <div class="jt-label">MAJOR JACKPOT</div>
+        <div class="jt-amount-fixed">50× BET</div>
+      </div>
+      <div class="jt-tier jt-mini">
+        <div class="jt-syms">🐆🐆🐆</div>
+        <div class="jt-label">MINI JACKPOT</div>
+        <div class="jt-amount-fixed">40× BET</div>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="token-bar">
+      <div class="tcard">
+        <div class="tcard-label">balance</div>
+        <div class="tcard-val" id="balance">1000</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">won</div>
+        <div class="tcard-val" id="won">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">burned</div>
+        <div class="tcard-val" id="burned">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">spins</div>
+        <div class="tcard-val" id="spins">0</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-label">session RTP</div>
+        <div class="tcard-val" id="rtp-display">&mdash;</div>
+      </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-area">
+
+      <!-- Left Jaguar Panel -->
+      <div class="jaguar-panel jaguar-left">
+        <div class="jaguar-emoji">🐆</div>
+        <div class="jaguar-deco"><span>◈</span><span>◈</span><span>◈</span></div>
+        <div class="jaguar-text">WILD</div>
+      </div>
+
+      <!-- Center Column -->
+      <div class="center-col">
+
+        <!-- Add Funds Row -->
+        <div class="funds-row">
+          <span class="funds-label">Add Chips:</span>
+          <button class="add-btn" data-amount="100">+100</button>
+          <button class="add-btn" data-amount="500">+500</button>
+          <button class="add-btn" data-amount="1000">+1,000</button>
+          <button class="add-btn" data-amount="5000">+5,000</button>
+          <button class="add-btn add-btn-custom" id="open-funds-modal-btn">Custom ✦</button>
+        </div>
+
+        <!-- Machine -->
+        <div class="machine" id="machine">
+
+          <div class="reels-area">
+            <div class="payline-sidebar" id="payline-sidebar-l">
+              <div class="payline-marker" id="pl-mark-0">1</div>
+              <div class="payline-marker" id="pl-mark-1">2</div>
+              <div class="payline-marker" id="pl-mark-2">3</div>
+            </div>
+            <div class="reels" id="reels-row">
+              <div class="reel-wrap" id="reel-wrap-0">
+                <div class="reel-inner" id="reel0"></div>
+                <div class="row-highlight row-highlight-top" id="rh-0-top"></div>
+                <div class="row-highlight row-highlight-mid" id="rh-0-mid"></div>
+                <div class="row-highlight row-highlight-bot" id="rh-0-bot"></div>
+                <div class="payline payline-top"></div>
+                <div class="payline payline-mid"></div>
+                <div class="payline payline-bot"></div>
+              </div>
+              <div class="reel-wrap" id="reel-wrap-1">
+                <div class="reel-inner" id="reel1"></div>
+                <div class="row-highlight row-highlight-top" id="rh-1-top"></div>
+                <div class="row-highlight row-highlight-mid" id="rh-1-mid"></div>
+                <div class="row-highlight row-highlight-bot" id="rh-1-bot"></div>
+                <div class="payline payline-top"></div>
+                <div class="payline payline-mid"></div>
+                <div class="payline payline-bot"></div>
+              </div>
+              <div class="reel-wrap" id="reel-wrap-2">
+                <div class="reel-inner" id="reel2"></div>
+                <div class="row-highlight row-highlight-top" id="rh-2-top"></div>
+                <div class="row-highlight row-highlight-mid" id="rh-2-mid"></div>
+                <div class="row-highlight row-highlight-bot" id="rh-2-bot"></div>
+                <div class="payline payline-top"></div>
+                <div class="payline payline-mid"></div>
+                <div class="payline payline-bot"></div>
+              </div>
+            </div>
+            <div class="payline-sidebar" id="payline-sidebar-r">
+              <div class="payline-marker" id="pl-mark-r0">1</div>
+              <div class="payline-marker" id="pl-mark-r1">2</div>
+              <div class="payline-marker" id="pl-mark-r2">3</div>
+            </div>
+          </div>
+
+          <div class="msg-box" id="msg">Place your bet and spin to begin your safari.</div>
+
+          <div class="btn-row">
+            <button id="spin-btn">▶ Spin</button>
+            <button id="autoplay-btn" class="autoplay-btn"><span class="autoplay-btn-label">▶▶ Autoplay</span></button>
+            <button id="reset-btn">↺ Refill</button>
+            <button id="open-paytable-btn" class="paytable-btn">📋 Paytable</button>
+          </div>
+
+          <div class="bet-row">
+            <span>Bet:</span>
+            <button id="bet-minus" class="bet-adjust-btn" title="Decrease bet">−</button>
+            <input type="number" id="bet" value="10" min="1" step="1">
+            <button id="bet-plus" class="bet-adjust-btn" title="Increase bet">+</button>
+            <span>chips</span>
+          </div>
+
+          <div class="bet-adjust-note" id="bet-adjust-note"></div>
+
+          <div class="bet-presets">
+            <button class="bet-preset" data-bet="5">5</button>
+            <button class="bet-preset" data-bet="10">10</button>
+            <button class="bet-preset" data-bet="25">25</button>
+            <button class="bet-preset" data-bet="50">50</button>
+            <button class="bet-preset" data-bet="100">100</button>
+            <button class="bet-preset" data-bet="250">250</button>
+            <button class="bet-preset" data-bet="max">MAX</button>
+          </div>
+
+        </div><!-- .machine -->
+
+      </div><!-- .center-col -->
+
+      <!-- Lever -->
+      <div class="lever-card">
+        <div class="lever-label">PULL</div>
+        <div class="lever-wrap" id="lever-wrap" title="Pull the lever to spin!" tabindex="0">
+          <div class="lever-groove"></div>
+          <div class="lever-arm" id="lever-arm">
+            <div class="lever-knob"></div>
+            <div class="lever-shaft"></div>
+          </div>
+          <div class="lever-base-plate"></div>
+        </div>
+        <div class="lever-arrow">▼</div>
+      </div>
+
+      <!-- Right Jaguar Panel -->
+      <div class="jaguar-panel jaguar-right">
+        <div class="jaguar-emoji">🐆</div>
+        <div class="jaguar-deco"><span>◈</span><span>◈</span><span>◈</span></div>
+        <div class="jaguar-text">HUNT</div>
+      </div>
+
+    </div><!-- .game-area -->
+
+  </div><!-- #wrap -->
+
+  <!-- Funds Modal -->
+  <div class="modal-overlay" id="funds-modal">
+    <div class="modal-box">
+      <div class="modal-title">🪙 Add Chips</div>
+      <div class="modal-presets">
+        <button class="modal-preset" data-amount="100">+100 🪙</button>
+        <button class="modal-preset" data-amount="500">+500 🪙</button>
+        <button class="modal-preset" data-amount="1000">+1,000 🪙</button>
+        <button class="modal-preset" data-amount="5000">+5,000 🪙</button>
+        <button class="modal-preset" data-amount="10000">+10,000 🪙</button>
+        <button class="modal-preset" data-amount="50000">+50,000 🪙</button>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-custom-row">
+        <input class="modal-input" type="number" id="custom-amount" placeholder="Custom amount..." min="1"
+          max="10000000">
+        <button class="modal-confirm-btn" id="confirm-custom-btn">Add</button>
+      </div>
+      <div class="custom-funds-error" id="custom-funds-error"></div>
+      <button class="modal-cancel-btn" id="cancel-funds-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Paytable Modal -->
+  <div class="modal-overlay" id="paytable-modal">
+    <div class="modal-box paytable-box">
+      <div class="modal-title">📋 Paytable &mdash; 3 Active Paylines &mdash; RTP: 96.50%</div>
+      <div class="paytable-note">Payouts apply to bet÷3 per line. Multiple lines can win simultaneously.</div>
+
+      <div class="pay-row highlight-jackpot"><span>💎💎💎 Diamond Jackpot + PROGRESSIVE</span><span>&times;150 + POOL</span></div>
+      <div class="pay-row highlight-bigwin"><span>🦁🦁🦁 Lion Pride</span><span>&times;50</span></div>
+      <div class="pay-row highlight-bigwin"><span>🐆🐆🐆 Jaguar Hunt</span><span>&times;40</span></div>
+      <div class="pay-row highlight-bigwin"><span>👑👑👑 Royal Flush</span><span>&times;30</span></div>
+      <div class="pay-row highlight-bigwin"><span>🪙🪙🪙 Gold Rush</span><span>&times;25</span></div>
+      <div class="pay-row highlight-combo"><span>💎🦁🐆 Safari Trio</span><span>&times;25</span></div>
+      <div class="pay-row highlight-combo"><span>💎🐆👑 Royal Hunt</span><span>&times;18</span></div>
+      <div class="pay-row"><span>🦁🐆👑 Jungle Crown</span><span>&times;15</span></div>
+      <div class="pay-row"><span>Any 3 of a kind</span><span>&times;15</span></div>
+      <div class="pay-row"><span>👑🪙🏆 Golden Empire</span><span>&times;12</span></div>
+      <div class="pay-row"><span>🐆⚡🎯 Wild Safari</span><span>&times;10</span></div>
+      <div class="pay-row highlight-pair"><span>Any 2 of a kind</span><span>&times;2</span></div>
+      <div class="pay-row"><span>No match</span><span>burned</span></div>
+
+      <div class="divider"></div>
+
+      <div class="pay-row highlight-wild"><span>🃏 WILD &mdash; substitutes for any regular symbol</span><span>completes combos</span></div>
+      <div class="pay-row highlight-scatter"><span>⭐⭐ Scatter &times;2 (pays anywhere)</span><span>&times;5</span></div>
+      <div class="pay-row highlight-scatter"><span>⭐⭐⭐ Scatter &times;3 + FREE SPINS</span><span>&times;20 + 3 free</span></div>
+      <div class="pay-row highlight-multiplier"><span>🔥 Multiplier &mdash; doubles any win it appears in</span><span>&times;2 boost</span></div>
+
+      <button class="modal-cancel-btn" id="close-paytable-btn">Close &times;</button>
+    </div>
+  </div>
+
+  <!-- Autoplay Modal -->
+  <div class="modal-overlay" id="autoplay-modal">
+    <div class="modal-box">
+      <div class="modal-title">▶▶ Autoplay</div>
+      <div class="autoplay-note">Pick how many spins to run automatically. Autoplay stops when you run out of spins or chips.</div>
+      <div class="modal-presets autoplay-presets">
+        <button class="modal-preset autoplay-preset" data-count="5">5 spins</button>
+        <button class="modal-preset autoplay-preset" data-count="10">10 spins</button>
+        <button class="modal-preset autoplay-preset" data-count="25">25 spins</button>
+        <button class="modal-preset autoplay-preset" data-count="50">50 spins</button>
+        <button class="modal-preset autoplay-preset" data-count="100">100 spins</button>
+        <button class="modal-preset autoplay-preset" data-count="250">250 spins</button>
+      </div>
+      <div class="modal-divider"></div>
+      <div class="modal-custom-row">
+        <input class="modal-input" type="number" id="autoplay-custom" placeholder="Custom count..." min="1" max="10000">
+        <button class="modal-confirm-btn" id="autoplay-confirm-btn">Start</button>
+      </div>
+      <div class="custom-funds-error" id="autoplay-error"></div>
+      <button class="modal-cancel-btn" id="autoplay-cancel-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Bonus Wheel Modal -->
+  <div class="modal-overlay" id="bonus-modal">
+    <div class="modal-box">
+      <div class="modal-title">🎡 BONUS WHEEL</div>
+      <div class="bonus-spins-badge" id="bonus-spins-badge">SPIN #<span id="bonus-spin-num">10</span></div>
+      <div class="wheel-container">
+        <canvas id="wheel-canvas" width="260" height="260"></canvas>
+        <div class="wheel-pointer"></div>
+      </div>
+      <div id="wheel-result"></div>
+      <button class="wheel-spin-btn" id="wheel-spin-btn">🎰 SPIN THE WHEEL</button>
+      <button class="modal-cancel-btn" id="wheel-close-btn"
+        style="display:none;margin-top:10px">Collect &amp; Continue &#x2192;</button>
+    </div>
+  </div>
+
+  <script defer src="script.js"></script>
+</body>
+
+</html>

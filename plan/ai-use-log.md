@@ -760,3 +760,68 @@ Also, there was a bug in previous iterations where the page couldn't scroll if y
 
 **Notes / Reflection:**  
 The AI seems to struggle with CSS, causing multiple elements of the app to be invisible. CSS can get very confusing for human developers, so it's not surprising that the AI has problems with it.
+
+## Iteration 13
+
+**Phase:**  4 - Gameplay Features & Controls
+**Team Member:** Hanwen
+
+**Date & Time:** April 21st, 2026, 7:30pm 
+
+**Task:**  
+Add autoplay system for the game and fix the UI by changing the color of the button
+
+**Model Used:**  
+Claude Opus 4.7 via Claude Code CLI
+
+**Prompt Used:**  
+
+Before doing anything, read these context files:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration12/changes.md
+- src/iterations/iteration12/index.html
+- src/iterations/iteration12/script.js
+- src/iterations/iteration12/styles.css
+
+I'm working on iteration #13 of a safari-themed slot machine project. For this iteration, the goal is to enable autoplay for the player and also fix the problem that the spin button, refill button, and paytable button are invisible to the player unless they hover their cursor over a button.
+
+Your job is to create iteration #13, all codes goes under src/iterations/iteration13:
+
+- And an autoplay feature in the slot machine app. Do so by adding a button that
+  when the user click that button, it allows the user to choose the number of times 
+  they wish to play automatically. Then, automatically play the game until either the
+  player runs out of tokens or we hit the number of times the player chose to autoplay.
+  Count down the number of times autoplay is left.
+- Change the color of the spin button, refill button, and paytable button to a constrasting
+  color from the background color when the player is not hovering their cursor on the button.
+  The color should be different from the color when the user is hovering on the button.
+- Do not change any other features in the game.
+
+
+Important: Do NOT edit any files outside of src/iterations/iteration13. Do NOT commit, stage, or push any changes to git. 
+
+Once you finish, record the changes you made inside changes.md
+
+AI Output Summary
+
+The AI made significant changes to the HTML, CSS, and JavaScript files. An autoplay feature was added, allowing the user to manually select the number of automatic spins.
+
+Previously, the buttons were invisible both when the mouse was not pointing at them and when hovering over them. The AI partially fixed this issue — the buttons are now visible when hovered over, but they remain invisible when the cursor is not pointing at them.
+
+**What you Used / Changed:**  
+All of the AI's code was used. Both ESLint and the html and CSS Validator returned with no errors.
+
+**Files Updated:**  
+src/iterations/iteration13/script.js  
+src/iterations/iteration13/index.html  
+src/iterations/iteration13/styles.css  
+src/iterations/iteration13/changes.md
+
+**Result:**  
+The autoplay feature is successfully added. However, the invisible buttons problem below the slot
+machine is only partially fixed. When the user now hover its cursor over the buttons, now the buttons
+become visible. However, the buttons still remains invisible when the cursor is pointed elsewhere.
+
+**Notes / Reflection:**  
+The autoplay feature was straightforward to implement once the core game loop logic was reused from the manual spin function. The main challenge in this iteration was the UI issue with the control buttons. The fact that the buttons only become visible on hover suggests a CSS state or stacking/visibility problem (e.g., opacity, z-index, or visibility rules tied to :hover). While hover behavior is now working correctly, the default hidden state is still persisting when the cursor is not interacting with the element. Future debugging should focus on the CSS rules governing button visibility and ensure that the default state is explicitly defined and not unintentionally overridden by transitions or parent container styles.

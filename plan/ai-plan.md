@@ -78,10 +78,11 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 - Add fast spin / speed control
 - Add history or stats tracking
 - Add settings panel (sound toggle, controls)
+- Fix bugs
 
 **Team Members:**
 
-- Name — Iterations 13, 14
+- Hanwen Chen — Iterations 13, 14
 - Name — Iterations 15, 16
 
 ---
