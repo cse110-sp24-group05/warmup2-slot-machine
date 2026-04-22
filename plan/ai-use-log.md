@@ -1208,3 +1208,61 @@ All three themes apply instantly on click and persist across page reloads. All b
 
 **Notes / Reflection:**  
 The theme specific selectors mostly handle things that were hardcoded, like the gradients on the machine frame or lever. Now, it also hardcoded the colors. If we wanted to add more themes later, just another body class with variable overrides.
+
+## Iteration 20
+
+**Phase:** Phase 5 — Engagement & Retention  
+
+**Team Member:** Lisa Tran
+
+**Date & Time:** 2026-04-22 4:00pm
+
+**Task:**  
+Add social and multiplayer engagement features so players can compete and collaborate with friends. Specifically: a leaderboard ranking friends and world players, a Safari Arena battle mode where players place stakes and the best spin wins the combined pool, a chip-sending system to gift chips to friends, two new daily social missions, win streak tracking, player name customization, and a URL invite link that awards bonus chips to new players who join via a friend's link.  
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+Before doing anything, read these files for context:
+
+  - plan/ai-plan.md
+  - plan/research-overview.md
+  - src/iterations/iteration19/changes.md
+  - src/iterations/iteration19/index.html
+  - src/iterations/iteration19/script.js
+  - src/iterations/iteration19/style.css
+  
+  I'm working on iteration #20 of a safari-themed slot machine project. For this iteration, the goal is to add the engagement of the game so players can play with other people to compete or play together with friends. 
+  
+  Your job is to create iteration #20, and all code goes under src/iterations/iteration20:
+
+  1. Add a sharing link so players can invite friends to play.
+  2. Add a leaderboard ranking between friends and world (global) players with different ranking metrics: levels, win streaks, total chips won.
+  3. Make an arena where players can invite others to compete (even simulated, since it's all local spinning)
+  4. Allow sending chips/rewards to other players.    
+  5. Add a social mission: "play with friends."
+  6. Players can host a game room with a code, jackpot = everyone's combined bet.
+  7. Players can collaborate and compete to win the pool bet.
+   
+Important: Do NOT edit any files outside of src/iterations/iteration20. Do NOT commit, stage, or push any changes to git. Once you finish, record the changes you made inside a file changes.md
+
+**AI Output Summary:**  
+Claude built the full social system across two context windows. It added a leaderboard modal with Friends/World tabs and four sortmetrics, a three-phase Arena modal (lobby → battle → results) where the player and three AI opponents each spin using the real game RNG and the best result wins the combined pool, a Send Chips modal with presets and a custom input, two new daily missions, win streak tracking on STATE, player name input in settings, and a URL invite system using a ?ref= query param. It also found and fixed three bugs in the same session: undefined updateBalance and saveState functions, wrong toast function name, and clipboard API failing silently on file:// URLs.
+
+**What you Used / Changed:**  
+Kept everything as generated. All three bugs were caught and fixed before wrapping up — no manual edits needed after the session.
+
+
+**Files Updated:**  
+- src/iterations/iteration20/index.html — added Leaderboard and Arena buttons, streak stat cards, player name row in settings, leaderboard modal, arena modal (3 phases), send chips modal
+- src/iterations/iteration20/script.js — added player identity, simulated friends, world leaderboard generator, leaderboard/sort/tab logic, arena state machine with real calcPayout() for opponents, send chips flow, copyToClipboard() with file:// fallback, URL invite check, win streak tracking, 5 daily missions
+- src/iterations/iteration20/style.css — arena glow animation, leaderboard styles, arena lobby/battle/results styles, send chips modal styles, streak card colors
+- src/iterations/iteration20/changes.md — documented all changes                
+
+**Result:**  
+Leaderboard opens and sorts correctly across all four metrics and both tabs. Arena runs through all three phases — lobby shows room code and participants, battle shows a 2.2s spin animation, results rank all players with a crown on the winner and correct pool math. Send Chips deducts from balance and triggers the daily mission. Invite link copies correctly on local files via the execCommand fallback. Win streaks update on every spin and arena outcome.        
+
+**Notes / Reflection:**  
+The biggest gotcha was that the codebase has no saveState() or updateBalance() — balance updates go through updateUI() and STATE is not persisted to localStorage (only rewards, progression, theme, and jackpot have separate keys). Calling undefined functions crashes silently inside a click handler with no visible error unless DevTools is open. Worth checking what utility functions actually exist in the base script before writing new code that calls them. The clipboard API also doesn't work on file:// without HTTPS, so always pair it with an execCommand fallback for local dev.
+
