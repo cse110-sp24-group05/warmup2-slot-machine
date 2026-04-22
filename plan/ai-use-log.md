@@ -1143,10 +1143,10 @@ The typeof getDifficultyFactor guard in weightedSymbol was a smart touch since t
 
 **Team Member:** Jayden Xie
 
-**Date & Time:** 01:00PM 2026-04-22
+**Date & Time:** 02:00PM 2026-04-22
 
 **Task:**  
-(what you were trying to do)
+Add a theme personalization system — a Themes button that opens a modal where players can switch between three visual themes (Safari Gold, Jungle Emerald, Midnight Neon) without touching any gameplay mechanics.
 
 **Model Used:**  
 Claude Opus 4.6 via Claude Code CLI
@@ -1185,23 +1185,26 @@ Do not change the actual slot symbols, payout math, progression system, rewards 
 
 3. The default experience should remain the current safari-themed design unless the player changes it.
 
-5. Make sure all important controls remain visible and readable in every theme and with every UI option combination.
+4. Make sure all important controls remain visible and readable in every theme and with every UI option combination.
 
 Important: Do NOT edit any files outside of src/iterations/iteration19.
 Do NOT commit, stage, or push any changes to git.
 Once you finish, record the changes you made inside a file changes.md
 
 **AI Output Summary:**  
-(briefly describe what the AI returned)
+Claude generated a full theme system: a new Themes button in the bottom right UI, a modal with three clickable theme cards (each with a color swatch preview), comprehensive CSS variable overrides for both alternate themes covering backgrounds, panels, buttons, glows, progress bars, modals, lever parts, jackpot tiers, and reel highlights. It also added localStorage persistence and wired the themes modal into the existing blocking modal system.
 
 **What you Used / Changed:**  
-(what you actually kept, modified, or ignored)
+The CSS override approach using custom properties was clean and didn't require restructuring existing styles. The JS was straightforward. Didn't need to modify or throw out anything significant.
 
 **Files Updated:**  
-(e.g., iterations/iteration-03/index.html)
+  - src/iterations/iteration19/index.html — added Themes button and themes modal
+  - src/iterations/iteration19/script.js — added theme load/save/apply logic, modal open/close, event listeners, updated anyBlockingModalOpen()                                                    
+  - src/iterations/iteration19/style.css — added themes modal styles plus full body.theme-jungle and body.theme-neon override blocks           
+  - src/iterations/iteration19/changes.md — documented all changes
 
 **Result:**  
 (did it work? what improved? any issues?)
 
 **Notes / Reflection:**  
-(optional: what you learned, what you'd do differently, what's left for next step)
+The theme specific selectors mostly handle things that were hardcoded, like the gradients on the machine frame or lever. Now, it also hardcoded the colors. If we wanted to add more themes later, just another body class with variable overrides.
