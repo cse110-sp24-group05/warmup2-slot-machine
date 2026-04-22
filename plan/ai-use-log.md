@@ -708,3 +708,55 @@ Sound effects were added for spinning the bonus wheel, closing the bonus wheel m
 
 **Notes / Reflection:**  
 Because the codebase uses oscillators to generate the sound effects from scratch, this limits it to pretty barebones sounds. If possible, I would try uploading some custom .wav files into the context window as a source of inspiration.
+
+## Iteration 12
+
+**Phase:** 3 - Design/UI changes  
+**Team Member:** Nick
+
+**Date & Time:** April 21st, 5-8pm
+
+**Task:**  
+Improve UI layout, along with colors and styling. Fix any UI-related bugs.
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+I'm working on iteration #12 of a safari-themed slot machine project. For this iteration, the goal is to design a prettier and more thematic user interface, and to fix UI-related bugs.
+
+Before doing anything, read these context files:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration11/changes.md
+- src/iterations/iteration11/index.html
+- src/iterations/iteration11/script.js
+- src/iterations/iteration11/styles.css
+
+Your job is to create iteration #12, which replaces any existing background designs with a safari-themed background, and updates the color scheme and interface to complement this background. There are also some critical bugs that need to be fixed:
+
+- The buttons to add/remove chips from your bet are invisible
+- Symbols aren't lined up correctly when the slot machine is done spinning
+
+
+Important: Do NOT edit any files outside of src/iterations/iteration12. Do NOT commit, stage, or push any changes to git. 
+
+Once you finish, record the changes you made inside changes.md
+
+**AI Output Summary:**  
+The AI made large changes to the CSS and JavaScript source files, about ~150 lines in each file. It also created 2 new files, which I had to prompt it again to remove.
+
+**What you Used / Changed:**  
+All of the AI's code was used. Both ESLint and the CSS Validator returned with no errors.
+
+**Files Updated:**  
+iterations/iteration12/style.css
+iterations/iteration12/script.js
+
+**Result:**  
+The slot machine symbols being misaligned was fixed. However, the invisible buttons below the slot machine are still invisible. A new background was also added, but the "vibrant savanna sunset" described by the AI is not visible.
+
+Also, there was a bug in previous iterations where the page couldn't scroll if you zoomed in really close. This iteration seems to have fixed that bug, which is surprising since I didn't mention it in the prompt.
+
+**Notes / Reflection:**  
+The AI seems to struggle with CSS, causing multiple elements of the app to be invisible. CSS can get very confusing for human developers, so it's not surprising that the AI has problems with it.
