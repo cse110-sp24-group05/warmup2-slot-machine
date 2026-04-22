@@ -63,7 +63,7 @@ We primarily use **Claude Opus 4.6** for development. If other models are used, 
 **Team Members:**
 
 - Jared Rosas — Iterations 9, 10
-- Name — Iterations 11, 12
+- Nick Mitroff — Iterations 11, 12
 
 ---
 

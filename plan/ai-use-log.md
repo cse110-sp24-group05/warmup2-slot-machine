@@ -662,3 +662,49 @@ ESLint passes clean. The clickability bug is resolved — all buttons, lever, th
 
 **Notes / Reflection:**  
 The slots fill up a lot of space making it resemble closely to a real life slot machine. The only issue is the hidden spin button at the bottom that only becomes visible if cursor hovers over it.
+
+## Iteration 11
+
+**Phase:** 3 - Design/UI changes  
+**Team Member:** Nick
+
+**Date & Time:** April 21st, 5-8pm
+
+**Task:**  
+Implement sound effects for spinning, win, lose, and clickable UI elements
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+I'm working on iteration #11 of a safari-themed slot machine project. For this iteration, the goal is to implement sound effects for a more fun and lively user experience.
+
+Before doing anything, read these context files:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration10/changes.md
+- src/iterations/iteration10/index.html
+- src/iterations/iteration10/script.js
+- src/iterations/iteration10/styles.css
+
+Your job is to create iteration #11, an updated version of the slot machine with sound effects fully implemented. This includes sound effects for the slot machine spinning, a sound effect when you win, a sound effect when you lose, and small sound effects for whenever a UI button is clicked on.
+
+
+Important: Do NOT edit any files outside of src/iterations/iteration11. Do NOT commit, stage, or push any changes to git. 
+
+Once you finish, record the changes you made inside changes.md
+
+**AI Output Summary:**  
+The AI only modified the JavaScript source file, adding about 50 lines of code. The modification was small because only a few modals interactions were still missing sound effects after the first 10 iterations.
+
+**What you Used / Changed:**  
+All of the code modifications were used, nothing was changed.
+
+**Files Updated:**  
+iterations/iteration11/script.js
+
+**Result:**  
+Sound effects were added for spinning the bonus wheel, closing the bonus wheel modal, opening the add chips modal, and closing the add chips modal. These are the same short "click" sounds that are used elsewhere in the app.
+
+**Notes / Reflection:**  
+Because the codebase uses oscillators to generate the sound effects from scratch, this limits it to pretty barebones sounds. If possible, I would try uploading some custom .wav files into the context window as a source of inspiration.
