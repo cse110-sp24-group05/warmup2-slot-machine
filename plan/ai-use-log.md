@@ -764,6 +764,7 @@ The AI seems to struggle with CSS, causing multiple elements of the app to be in
 ## Iteration 13
 
 **Phase:**  4 - Gameplay Features & Controls
+
 **Team Member:** Hanwen
 
 **Date & Time:** April 21st, 2026, 7:30pm 
@@ -825,3 +826,84 @@ become visible. However, the buttons still remains invisible when the cursor is 
 
 **Notes / Reflection:**  
 The autoplay feature was straightforward to implement once the core game loop logic was reused from the manual spin function. The main challenge in this iteration was the UI issue with the control buttons. The fact that the buttons only become visible on hover suggests a CSS state or stacking/visibility problem (e.g., opacity, z-index, or visibility rules tied to :hover). While hover behavior is now working correctly, the default hidden state is still persisting when the cursor is not interacting with the element. Future debugging should focus on the CSS rules governing button visibility and ensure that the default state is explicitly defined and not unintentionally overridden by transitions or parent container styles.
+
+## Iteration 14
+
+**Phase:**  4 - Gameplay Features & Controls
+
+**Team Member:** Hanwen
+
+**Date & Time:** April 21st, 2026, 10:00pm 
+
+**Task:**  
+Add fast spin + speed control and fix the UI by making the buttons to be always visible
+
+**Model Used:**  
+Claude Opus 4.7 via Claude Code CLI
+
+**Prompt Used:**  
+
+Before doing anything, read these context files:
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration13/changes.md
+- src/iterations/iteration13/index.html
+- src/iterations/iteration13/script.js
+- src/iterations/iteration13/styles.css
+
+I'm working on iteration #14 of a safari-themed slot machine project. For this iteration, the goal is to enable fast spin and speed control for the player and also fix the visibility of the spin button, refill button, and paytable button.
+
+Your job is to create iteration #14, all codes goes under src/iterations/iteration14:
+
+- And an fast spin button to the left of spin button that when the user click that button, it allows the user
+  to choose to speed up the animation and receive the result faster. The user
+  may choose to 2x or 3x the animation process.
+- Make the spin button, refill button, and paytable button always appear yellow, pink, and gold respectively
+  no matter where the player's cursor is.
+- Do not change any other features in the game.
+
+
+Important: Do NOT edit any files outside of src/iterations/iteration14. Do NOT commit, stage, or push any changes to git. 
+
+Once you finish, record the changes you made inside changes.md
+
+AI Output Summary
+
+The AI made significant changes to the HTML, CSS, and JavaScript files. An fast spin button with speed control is
+successfully added, which the user may use to change the pace of the game.
+
+However, the visibility of the spin button, refill button, and paytable button not only did not improve, but had
+gotten worse. It returned to the previous state in iteration 12 where the buttons are not visible even when the
+player hover the cursor over the button.
+
+**What you Used / Changed:**  
+All of the AI's code was used. Both ESLint and the html and CSS Validator returned with no errors.
+
+**Files Updated:**  
+src/iterations/iteration14/script.js  
+src/iterations/iteration14/index.html  
+src/iterations/iteration14/styles.css  
+src/iterations/iteration14/changes.md
+
+**Result:**  
+The fast spin + speed control feature is successfully added. However, the invisible buttons problem below the slot
+machine is has gotten worse. It returned to the previous state as in iteration 12 where the buttons are invisible unless
+clicked by the player.
+
+**Notes / Reflection:**  
+The fast spin and speed control feature was successfully implemented and functions as intended, improving gameplay responsiveness and user control over spin duration.
+
+However, a regression has been introduced affecting the UI button visibility beneath the slot machine. The buttons have reverted to their previous behavior from Iteration 12, where they are invisible by default and only appear after being clicked. This indicates that recent changes likely modified or overwrote the CSS or hover-state logic responsible for button visibility.
+
+This issue appears to be caused by a styling or state-management conflict introduced during the latest iteration, potentially involving:
+
+CSS hover/opacity rules being removed or overridden
+JavaScript dynamically toggling visibility classes incorrectly
+A regression from a previous UI visibility fix not being preserved
+
+Further debugging should focus on:
+
+Comparing current CSS with Iteration 12 styling rules
+Checking whether button visibility depends on hover state or class toggles
+Ensuring no recent JavaScript updates are resetting button visibility states on load
+
