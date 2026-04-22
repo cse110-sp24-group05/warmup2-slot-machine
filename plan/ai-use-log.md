@@ -1095,21 +1095,26 @@ Claude Opus 4.6 via Claude Code CLI
 
 **Prompt Used:**  
 Before doing anything, read these files for context:
-plan/ai-plan.md
-plan/research-overview.md
-src/iterations/iteration17/changes.md
-src/iterations/iteration17/index.html
-src/iterations/iteration17/script.js
-src/iterations/iteration17/style.css
+
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration17/changes.md
+- src/iterations/iteration17/index.html
+- src/iterations/iteration17/script.js
+- src/iterations/iteration17/style.css
+
 I'm working on iteration #18 of a safari-themed slot machine project. For this iteration, the goal is to add a progression such as levels or milestones.
+
 Your job is to create iteration #18, all code goes under src/iterations/iteration18:
 Add tier ranks to the game, from bronze, to silver, to gold, to platinum, to diamonds, to master, to grandmaster, to challenger, the hard of the game also increase with the rank.
 Add levels to the game, maximum is 60. Gain exp to level up, the higher level, the harder to get exp. 
 Gain exp by playing
+
 For each level/milestone, it will have their own missions to complete. 
 Get rewards when level up, the higher the level, the bigger the reward
 For level 15, 30, and 60 will be a checkpoint, so make sure they get a huge reward. Especially on level 60. 
 Do not change any other features in the game.
+
 Important: Do NOT edit any files outside of src/iterations/iteration18.
 Do NOT commit, stage, or push any changes to git.
 Once you finish, record the changes you made inside a file changes.md
@@ -1121,10 +1126,10 @@ It read through all the existing code, understood the architecture, and added th
 Kept everything as is. The AI's output was clean and didn't break any existing features. The XP curve, mission scaling, and reward amounts all felt reasonable without needing tweaks.
 
 **Files Updated:**  
-  - iteration18/index.html — added progression bar, Rank button, progression modal
-  - iteration18/script.js — added progression system (ranks, levels, XP, missions, difficulty), modified weightedSymbol() and anyBlockingModalOpen()
-  - iteration18/style.css — added all progression UI styles
-  - iteration18/changes.md — documented everything
+  - src/iterations/iteration18/index.html — added progression bar, Rank button, progression modal
+  - src/iterations/iteration18/script.js — added progression system (ranks, levels, XP, missions, difficulty), modified weightedSymbol() and anyBlockingModalOpen()
+  - src/iterations/iteration18/style.css — added all progression UI styles
+  - src/iterations/iteration18/changes.md — documented everything
 
 **Result:**  
 Works well. XP ticks up as you spin, levels feel progressively harder to reach, missions give you short-term goals each level, and the checkpoint rewards at 15/30/60 hit satisfyingly hard with confetti and coin rain. Difficulty scaling is subtle but noticeable at higher ranks, rare symbols genuinely show up less. No regressions in existing features.
