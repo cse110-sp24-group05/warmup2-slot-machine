@@ -1042,7 +1042,7 @@ Before doing anything, read these files for context:
   - src/iterations/iteration16/index.html                                                                                               
   - src/iterations/iteration16/script.js
   - src/iterations/iteration16/style.css                                                                                                
-  as daily bonus, streaks on every month or invite friend.                                                                            
+  add daily bonus, streaks on every month or invite friend.                                                                            
   Your job is to create iteration #17, all code goes under src/iterations/iteration17:                                                  
   - Add rewards spot where they can complete their daily login, daily missions, weekend missions, and they can redeem reward every week 
   - For each month streak, double the rewards based on their streak                                                                     
