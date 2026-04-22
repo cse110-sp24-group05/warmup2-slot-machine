@@ -1019,3 +1019,54 @@ The task was accomplished successfully with no issues. However, there are some t
 
 **Notes / Reflection:**  
 The feature was successfully implemented with no issues, besides if we unanimously decide to remove that other voiceover button near the title. For the next steps and following iterations, some things we can possibly look to debug would be the long-persisting visual bugs involving the invisible buttons (including the paytable, refill, spin, and fast spin, and bet amounts) on the interface of the slot machine. 
+
+## Iteration 17
+
+**Phase:** Phase 5 — Engagement & Retention
+
+**Team Member:** Lisa Tran
+
+**Date & Time:** 2026-04-22, 11:00
+
+**Task:**  
+Add a rewards system to the slot machine. Players can claim a daily login bonus, complete daily missions, complete weekend-only missions, redeem a weekly reward, and claim friend referral bonuses. Monthly login streaks double the reward multiplier.      
+
+**Model Used:**  
+Claude Opus 4.7 via Claude Code CLI
+
+**Prompt Used:**  
+Before doing anything, read these files for context:
+  - plan/ai-plan.md
+  - plan/research-overview.md                                                                                                           
+  - src/iterations/iteration16/changes.md
+  - src/iterations/iteration16/index.html                                                                                               
+  - src/iterations/iteration16/script.js
+  - src/iterations/iteration16/style.css                                                                                                
+  as daily bonus, streaks on every month or invite friend.                                                                            
+  Your job is to create iteration #17, all code goes under src/iterations/iteration17:                                                  
+  - Add rewards spot where they can complete their daily login, daily missions, weekend missions, and they can redeem reward every week 
+  - For each month streak, double the rewards based on their streak                                                                     
+  - Also, if they invite a friend give bonus rewards for them                                                                           
+  * Do not change any other features in the game.                                                                                       
+  Important: Do NOT edit any files outside of src/iterations/iteration17.                                                               
+  Do NOT commit, stage, or push any changes to git.                                                                                     
+  Once you finish, record the changes you made inside a file changes.md   
+
+**AI Output Summary:**  
+  AI created all four files under src/iterations/iteration17/. It added a Rewards button (bottom-right, next to Settings) with a pulsing notification badge when unclaimed rewards are available. The rewards modal contains five sections: daily login bonus (75 chips base), three daily missions with progress bars (spin 5×, win once, bet 50+), two weekend-only missions (spin 10×, land a big win), a weekly reward (250 chips), and an invite-a-friend section supporting up to 3 referral claims (200 chips each). All reward amounts scale with a month-streak multiplier (2^monthStreak, capped at 16×). Streak is tracked via consecutive daily logins (every 30 days increments the month streak). Mission progress is hooked into the spin function. All state persists to localStorage.
+
+**What you Used / Changed:**  
+All AI output used. Nothing changes.
+
+**Files Updated:**  
+  - src/iterations/iteration17/index.html                                                                                               
+  - src/iterations/iteration17/script.js                                                                                                
+  - src/iterations/iteration17/style.css
+  - src/iterations/iteration17/changes.md 
+
+**Result:**  
+ The AI creates a reward place at the bottom right of the page. It has daily login rewards, 3 daily missions, daily weekends which only open on Saturday and Sunday. And, the weekly reward that resets every Monday. Also, there is “Invite friends” mission, but it does not work. It’s only supposed to claim if invited friends, but right now you can just claim without inviting anyone. There’s also day streak, and month streak                                                                                    
+
+
+**Notes / Reflection:**  
+  The AI did what I asked for which is creating the rewards spot for daily and weekly. However, the invite friend did not work as it’s supposed to be. Overall, it’s good, still needs to improve at the “invite friends”
