@@ -1136,3 +1136,72 @@ Works well. XP ticks up as you spin, levels feel progressively harder to reach, 
 
 **Notes / Reflection:**  
 The typeof getDifficultyFactor guard in weightedSymbol was a smart touch since that function runs before the progression code is defined.
+
+## Iteration 19
+
+**Phase:** Phase 5 — Engagement & Retention
+
+**Team Member:** Jayden Xie
+
+**Date & Time:** 01:00PM 2026-04-22
+
+**Task:**  
+(what you were trying to do)
+
+**Model Used:**  
+Claude Opus 4.6 via Claude Code CLI
+
+**Prompt Used:**  
+Before doing anything, read these files for context:
+
+- plan/ai-plan.md
+- plan/research-overview.md
+- src/iterations/iteration18/changes.md
+- src/iterations/iteration18/index.html
+- src/iterations/iteration18/script.js
+- src/iterations/iteration18/style.css
+
+I'm working on iteration #19 of a safari-themed slot machine project. For this iteration, the goal is to add personalization features so players can customize the game's appearance and interface without changing the core gameplay.
+
+Your job is to create iteration #19, and all code goes under src/iterations/iteration19:
+
+1. Add a new Personalize or Themes button to the interface that opens a personalization panel or modal.
+
+2. Inside that panel, add 3 selectable visual themes:
+- Safari Gold (the current/default theme)
+- Jungle Emerald
+- Midnight Neon
+
+Each theme should noticeably change the overall UI styling in a cohesive way, including things like:
+- background colors / gradients
+- panel colors
+- button styling
+- glow / accent colors
+- jackpot / progress bar accents
+- modal styling
+- reel frame / machine trim colors
+
+Do not change the actual slot symbols, payout math, progression system, rewards system, or game mechanics. This is a presentation/personalization iteration only.
+
+3. The default experience should remain the current safari-themed design unless the player changes it.
+
+5. Make sure all important controls remain visible and readable in every theme and with every UI option combination.
+
+Important: Do NOT edit any files outside of src/iterations/iteration19.
+Do NOT commit, stage, or push any changes to git.
+Once you finish, record the changes you made inside a file changes.md
+
+**AI Output Summary:**  
+(briefly describe what the AI returned)
+
+**What you Used / Changed:**  
+(what you actually kept, modified, or ignored)
+
+**Files Updated:**  
+(e.g., iterations/iteration-03/index.html)
+
+**Result:**  
+(did it work? what improved? any issues?)
+
+**Notes / Reflection:**  
+(optional: what you learned, what you'd do differently, what's left for next step)
