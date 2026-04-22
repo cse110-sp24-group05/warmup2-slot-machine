@@ -928,8 +928,12 @@ Before doing anything, read these files for context:
 * src/iterations/iteration14/index.html
 * src/iterations/iteration14/script.js
 * src/iterations/iteration14/style.css
+
+
 I'm working on iteration #15 of a safari-themed slot machine project. For this iteration, the goal is to add a history and stats tracking feature. 
 Your job is to create iteration #15, all code goes under src/iterations/iteration15:
+
+
 * Add a button at the bottom left corner that when clicked, allows the user to view a history of all their recent spins. This list will include things like bet size, symbols landed, and any winnings. You can limit this history to track up to the last 100 spins before the oldest spin gets removed from the history list to make room for the newest spins. 
 * Add another button next to the history button. When clicked, this button will display to the user their stats during the session. This includes the number of times the user spins the machine, average bet size of the user, and the biggest win so far.
 * To do this, both the history and stats need to be actively tracked.
