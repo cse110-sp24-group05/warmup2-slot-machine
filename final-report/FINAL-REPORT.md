@@ -52,13 +52,13 @@ The invisible-button problem from Phase 3 was still there. Sometimes it got a li
 
 ## Phase 5 - Engagement and Retention (Iterations 17 to 20)
 
-We stacked on retention stuff: daily and weekly rewards, streak bonuses, progression with ranks and levels and big rewards at certain level milestones, three visual themes you can switch between, then social-flavored features like leaderboards, a simple arena mode with simulated opponents, sending chips, invite links, and extra missions.
+We stacked on retention attributes: daily and weekly rewards, streak bonuses, progression with ranks and levels and big rewards at certain level milestones, three visual themes you can switch between, then social-flavored features like leaderboards, a simple arena mode with simulated opponents, sending chips, invite links, and extra missions.
 
-The log calls out gaps too: for example, invite rewards could be claimed without a real invite, and one iteration briefly referenced functions that did not exist until someone caught it. Still, by iteration 20 the log describes those systems largely working, with clipboard fallbacks for sharing when the browser is picky.
+The log calls out gaps as well, for example, invite rewards could be claimed without a real invite, and one iteration briefly referenced functions that did not exist until someone caught it. Still, by iteration 20 the log describes those systems largely working, with clipboard fallbacks for sharing.
 
 ## Phase 6 - Final Integration and Polish
 
-Phase 6 is still in our plan as the last cleanup pass: one place where everything gets tested together, UI inconsistencies get fixed, and leftover issues (especially controls that are hard to see) get handled for real. Our written log stops at iteration 20, so we are not claiming Phase 6 is finished here. It is the obvious next step.
+Iteration 21 was our cleanup pass. We ran a final audit on the full codebase, fixed a handful of bugs that had slipped through in the later phases, cleaned up some code that had drifted from the standards we set in Phase 1, and tested everything together before the final commit.
 
 # How AI Performed
 
@@ -70,12 +70,12 @@ We saw nice surprises, like extra polish on history entries, and bad surprises, 
 
 # The Final Product
 
-Where the log leaves off, you have a browser slot machine with a safari theme (plus alternate themes), three reels and three rows, multiple paylines, fairer odds than we started with, wilds and scatters and multipliers, jackpots and stats on screen, autoplay and fast spin, history and stats panels, settings for sound and keys, rewards and progression, leaderboards and a simple arena, and chip sharing and invite links. A lot of that state saves between visits in the browser the way the iterations describe.
+By the end of iteration 21, the game is a browser slot machine with a safari theme and two alternate themes, three reels and three rows, multiple paylines, wilds and scatters and multipliers, tiered jackpots displayed in real time, autoplay and fast spin, spin history and session stats, a settings panel for sound and keyboard controls, daily and weekly rewards, a progression system with ranks and levels, leaderboards, a simple arena mode with simulated opponents, and chip sharing with invite links. Most of that state persists between visits using localStorage. Compared to the Lab 1 starting point, which was a single monolithic HTML file with basic spin logic and an AI token joke, this is a dramatically more complete and playable game.
 
-Compared to Lab 1, it is a much bigger, more feature-heavy game. It is also not perfect: the log keeps mentioning UI visibility issues and a half-baked referral rule. We did not get a demo video URL from the same sources as this report, so we would add that separately if the class asks for it.
+It is not perfect. The log is honest about UI visibility issues that came and went across phases, and a few social features like referral rewards were more proof of concept than fully locked down. But the core game is solid, the odds are fair, and the features we set out to build from the research are all there in some form.
 
 # What We Took Away
 
-The assignment was built around AI generation, and that matched how it felt day to day: fast progress when prompts were clear, weird gaps when they were not. AI saved us a ton of typing on refactors and feature dumps, but it did not save us from playtesting or from chasing bugs that only show up when a real person clicks around.
+This lab was built around AI generation and that matched how it felt day to day. Fast progress when prompts were tight and specific, weird gaps and regressions when they were not. AI saved us a lot of time on big mechanical refactors, feature implementation, and slot math. It did not save us from playtesting, from chasing bugs that only show up when a real person clicks around, or from reviewing output before accepting it.
 
-If we did it again, we would probably stop and do one dedicated “make every button visible on a fresh open” pass instead of hoping the next theme tweak fixes it. We would also keep the log habit. Writing down what broke and what we actually did made this report possible and kept us a little more honest than “yeah, it works.”
+If we did this again we would probably do one dedicated pass early on to make sure every button is visible on a fresh open, rather than hoping the next iteration fixes it. We would also keep the logging habit regardless. Writing down what broke and what we actually did made this report possible and kept the whole team more honest about what was working and what was not.

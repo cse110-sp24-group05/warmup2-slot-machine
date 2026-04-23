@@ -1266,3 +1266,67 @@ Leaderboard opens and sorts correctly across all four metrics and both tabs. Are
 **Notes / Reflection:**  
 The biggest gotcha was that the codebase has no saveState() or updateBalance() — balance updates go through updateUI() and STATE is not persisted to localStorage (only rewards, progression, theme, and jackpot have separate keys). Calling undefined functions crashes silently inside a click handler with no visible error unless DevTools is open. Worth checking what utility functions actually exist in the base script before writing new code that calls them. The clipboard API also doesn't work on file:// without HTTPS, so always pair it with an execCommand fallback for local dev.
 
+## Iteration 21
+
+**Phase:** Final Polish
+
+**Team Member:** Patrick
+
+**Date & Time:** 2026-04-22
+
+**Task:**
+Fixed three gameplay bugs (leaderboard and arena showing wrong player stats, arena free-chip exploit, inconsistent invite link format) and completed a code quality sweep (var to let/const, innerHTML string concat to template literals, removed dead code, fixed all ESLint errors).
+
+**Model Used:** Claude Sonnet 4.6 via Claude Code CLI
+
+**Prompt Used:**
+I'm working on Iteration 21 — a final polish pass before submission.
+
+Read these files before doing anything:
+- plan/ai-plan.md
+- src/iterations/iteration20/script.js
+- src/iterations/iteration20/index.html
+- src/iterations/iteration20/styles.css
+
+The starting point is src/iterations/iteration21/ (already copied from iteration20). Fix the following issues only:
+
+Bug 1 — Leaderboard and Arena show wrong stats for the local player.
+getLBPlayerData() reads STATE.level and STATE.totalSpins but these fields do not exist on STATE. The real values are PROGRESSION.level and STATE.spinCount. Fix all references so the player's own row displays correct level and spin count instead of the Lv 1 / 0 fallbacks.
+
+Bug 2 — Arena is a free chip farm.
+Only the player's stake is debited but the winner collects stake x participants. With 4 players this is always positive EV for the player. Fix by either applying a house rake equal to the virtual opponent contributions, or capping the prize to the player's own stake times a multiplier. Pick whichever is simpler and cleaner.
+
+Bug 3 — Inconsistent invite link format.
+copyInviteLink() generates a random SAFARI-XYZ code on every click while buildInviteLink() uses a stable MY_PLAYER_ID derived code. Standardize both to use the stable MY_PLAYER_ID format so shared links are consistent.
+
+Code quality — var and innerHTML regression.
+Phase 1 explicitly removed all var and string-concat innerHTML. Iterations 17-20 reintroduced roughly 300 var occurrences and a dozen innerHTML template blocks. Do a sweep and convert var to let/const and replace innerHTML string concatenation with template literals throughout the new code added in those iterations.
+
+Constraints:
+- ONLY edit files in src/iterations/iteration21/
+- Do NOT add new features
+- Preserve all JSDoc annotations, add JSDoc to any new functions
+- Do NOT commit anything, I handle all git operations
+- Run ESLint before declaring done and fix any lint errors
+- I have a local server running at http://localhost:8080
+
+Read the files first, lay out your plan, then proceed. Only stop if you hit a genuine ambiguity.
+
+**AI Output Summary:**
+AI identified exact bug locations via targeted grep, applied all four fixes surgically, ran a bulk var to let conversion (297 replacements), manually rewrote 6 innerHTML string-concat blocks as template literals, then resolved all 10 ESLint errors by removing dead code and using optional catch binding syntax.
+
+**What you Used / Changed:**
+- Bug 1: getLBPlayerData() — STATE.level changed to PROGRESSION.level, STATE.totalSpins changed to STATE.spinCount; renderArenaParticipants() received the same level fix
+- Bug 2: resolveArenaBattle() — introduced prize = ARENA_STATE.stake * 2 cap; updated renderArenaResults() to show accurate prize versus display pool
+- Bug 3: copyInviteLink() rewritten to call buildInviteLink() using stable MY_PLAYER_ID format instead of generating a random SAFARI-XYZ code
+- Code quality: 297 var to let replacements, 6 innerHTML blocks converted to template literals, removed shuffled dead variable, 5 catch bindings updated to optional catch syntax
+
+**Files Updated:**
+- src/iterations/iteration21/script.js
+
+**Result:**
+ESLint reports 0 errors. All three bugs corrected. No var declarations remain. All identified innerHTML string-concat blocks converted to template literals. Game logic and features unchanged.
+
+**Notes / Reflection:**
+The Arena bug was subtle — the pool display is kept for UI engagement but the actual credit is now capped to 2x stake so the player cannot farm chips from virtual opponents. TOTAL_WEIGHT was a leftover constant from an earlier RNG design that was later replaced by weightedSymbol() using a local total, safe to remove.
+
