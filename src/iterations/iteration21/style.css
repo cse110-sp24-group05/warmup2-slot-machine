@@ -482,11 +482,18 @@ body::after {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: 14px;
   border: 1px solid transparent;
   background: linear-gradient(#1c0e02, #140a00) padding-box,
               linear-gradient(135deg, rgba(255,215,0,0.5), rgba(139,90,0,0.2), rgba(255,215,0,0.5)) border-box;
   pointer-events: none;
+}
+
+/* All sections above the border decoration; same z-index so DOM order = paint order. */
+.machine > * {
+  position: relative;
+  z-index: 1;
 }
 
 .machine.glow-win     { box-shadow: 0 0 0 1px rgba(212,175,55,0.30), 0 0 36px rgba(39, 174, 96, 0.18); }
@@ -765,8 +772,7 @@ body::after {
   row-gap: 8px;
   justify-content: center;
   max-width: 100%;
-  position: relative;
-  z-index: 1;
+  /* No z-index here — it would stack this row above .bet-row / .bet-presets and hide them. */
 }
 
 button {
